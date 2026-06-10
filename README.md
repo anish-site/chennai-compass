@@ -45,11 +45,19 @@ npm test           # unit tests (Vitest + Testing Library)
 npm run build      # type-check + production build
 ```
 
-## Deploy (one-time setup)
+## Deploy
 
-1. Push to `main`.
-2. In the repo settings → **Pages**, set the source to **GitHub Actions**.
-3. The [deploy workflow](.github/workflows/deploy.yml) runs the tests, builds, and publishes to
+### Vercel (recommended)
+
+1. Sign in at [vercel.com](https://vercel.com) with GitHub and import this repo.
+2. Vercel auto-detects Vite (build `npm run build`, output `dist`) — no settings needed.
+3. Every push to `main` deploys to production; every branch/PR gets a preview URL.
+
+### GitHub Pages (alternative)
+
+1. In the repo settings → **Pages**, set the source to **GitHub Actions**.
+2. The [deploy workflow](.github/workflows/deploy.yml) runs the tests, builds with
+   `--base=/chennai-compass/`, and publishes to
    `https://anish-site.github.io/chennai-compass/` on every push to `main`.
 
 Made with 🧡 in Chennai.
