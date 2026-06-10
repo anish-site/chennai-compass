@@ -440,6 +440,26 @@ button {
   color: var(--white);
 }
 
+.photo-credit {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 65%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(45, 42, 38, 0.55);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.62rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
 .card-body {
   display: flex;
   flex-direction: column;

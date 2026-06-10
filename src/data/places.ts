@@ -26,6 +26,13 @@ export interface Place {
   image: string;
   /** Override for the Google search query when the name alone is ambiguous. */
   googleQuery?: string;
+  /**
+   * Google Maps place ID. Optional: with a VITE_GOOGLE_MAPS_API_KEY set, cards
+   * show the place's real Google Maps photo — a place ID pins the exact
+   * listing (run `node scripts/resolve-place-ids.mjs` to fill these in);
+   * without one the app resolves the place by name at runtime.
+   */
+  placeId?: string;
 }
 
 export const CATEGORIES: Category[] = [

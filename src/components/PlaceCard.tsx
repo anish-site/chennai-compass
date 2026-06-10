@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import { MapPin, Navigation } from 'lucide-react';
+import { Camera, MapPin, Navigation } from 'lucide-react';
 import type { Place } from '../data/places';
 import { buildDirectionsUrl, buildGoogleSearchUrl } from '../utils/links';
+import { usePlacePhoto } from '../hooks/usePlacePhoto';
 
 export default function PlaceCard({ place, index }: { place: Place; index: number }) {
-  const [imgFailed, setImgFailed] = useState(false);
+  const { src, attribution } = usePlacePhoto(place);
+  const [failedSrcs, setFailedSrcs] = useState<string[]>([]);
+
+  // Google Maps photo first, bundled image as backup, gradient as last resort.
+  const currentSrc = [src, place.image].find((s) => s && !failedSrcs.includes(s));
+  const isGooglePhoto = currentSrc === src && src !== place.image;
 
   const openGoogle = () => {
     window.open(buildGoogleSearchUrl(place), '_blank', 'noopener,noreferrer');
@@ -28,20 +34,25 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
       }}
     >
       <div className="card-media">
-        {imgFailed ? (
+        {currentSrc ? (
+          <img
+            src={currentSrc}
+            alt={place.name}
+            loading="lazy"
+            onError={() => setFailedSrcs((failed) => [...failed, currentSrc])}
+          />
+        ) : (
           <div className="card-fallback" aria-hidden="true">
             {place.name.charAt(0)}
           </div>
-        ) : (
-          <img
-            src={place.image}
-            alt={place.name}
-            loading="lazy"
-            onError={() => setImgFailed(true)}
-          />
         )}
         <span className="badge badge-category">{place.category}</span>
         <span className="badge badge-price">{place.price}</span>
+        {isGooglePhoto && attribution && (
+          <span className="photo-credit">
+            <Camera size={10} aria-hidden="true" /> {attribution}
+          </span>
+        )}
       </div>
       <div className="card-body">
         <div className="card-title-row">

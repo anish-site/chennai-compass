@@ -36,6 +36,27 @@ array and the app picks it up automatically — filters, areas and all:
 }
 ```
 
+## Real photos from Google Maps (optional)
+
+Out of the box the cards use bundled images. Add a Google Maps API key and every card
+shows the **real photo from that place's Google Maps listing** (Google puts owner /
+representative photos first), with the photographer credited on the image.
+
+1. Create a project at [console.cloud.google.com](https://console.cloud.google.com), enable
+   billing (the free monthly tier comfortably covers a friends-scale app) and enable only the
+   **Places API (New)**.
+2. Create an API key and restrict it: *Application restrictions → Websites* — add
+   `http://localhost:5173/*` and your deployed domain (e.g. `https://chennai-compass.vercel.app/*`);
+   *API restrictions* — Places API (New) only. This keeps the key safe to ship in a frontend.
+3. Locally: `cp .env.example .env.local` and paste the key. On Vercel: Project → Settings →
+   Environment Variables → add `VITE_GOOGLE_MAPS_API_KEY`, then redeploy.
+4. (Recommended) Pin exact listings and halve API usage:
+   `GOOGLE_MAPS_API_KEY=your-key node scripts/resolve-place-ids.mjs` — fills in `placeId` for
+   every place in `src/data/places.ts`; review the printed matches and commit.
+
+Photos are cached in the visitor's browser for 7 days, so repeat visits make no API calls.
+If a lookup fails, the card silently falls back to the bundled image.
+
 ## Develop
 
 ```bash
