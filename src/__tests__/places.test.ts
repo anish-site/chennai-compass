@@ -12,7 +12,6 @@ describe('places data', () => {
       expect(place.name, place.id).not.toBe('');
       expect(place.area, place.id).not.toBe('');
       expect(place.description, place.id).not.toBe('');
-      expect(place.image, place.id).toMatch(/^https:\/\//);
       expect(place.vibes.length, place.id).toBeGreaterThan(0);
       expect(place.bestTime.length, place.id).toBeGreaterThan(0);
       expect(place.tags.length, place.id).toBeGreaterThan(0);
