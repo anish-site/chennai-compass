@@ -4,7 +4,9 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/chennai-compass/',
+  // Root-relative by default (Vercel/Netlify/etc.); the GitHub Pages
+  // workflow overrides this with --base=/chennai-compass/.
+  base: '/',
   test: {
     environment: 'jsdom',
     globals: true,
