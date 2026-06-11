@@ -4,7 +4,7 @@ import Modal from './Modal';
 
 // CMRL's official WhatsApp ticketing number (digits only, with country code).
 // Verify/update if CMRL changes it: https://chennaimetrorail.org/
-const METRO_WHATSAPP_NUMBER = '918681996995';
+const METRO_WHATSAPP_NUMBER = '918300086000';
 const BOOK_TICKET_URL = `https://wa.me/${METRO_WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi')}`;
 
 export default function MetroMapModal({ onClose }: { onClose: () => void }) {
