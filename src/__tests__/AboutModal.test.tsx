@@ -41,11 +41,12 @@ describe('AboutModal', () => {
   });
 });
 
-describe('About button in the app', () => {
-  it('is hidden by default and opens from the header About button', async () => {
+describe('About in the app menu', () => {
+  it('is hidden by default and opens from the header menu', async () => {
     render(<App />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: /about/i }));
+    await userEvent.click(screen.getByRole('button', { name: /menu/i }));
+    await userEvent.click(screen.getByRole('menuitem', { name: /about this guide/i }));
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText('About Chennai')).toBeInTheDocument();
   });

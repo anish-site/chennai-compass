@@ -15,7 +15,14 @@ function isStandalone(): boolean {
   );
 }
 
-export default function InstallButton() {
+interface Props {
+  /** 'pill' renders the standalone button; 'menu' renders a dropdown menu item. */
+  variant?: 'pill' | 'menu';
+  /** Called when the button is activated (e.g. to close the parent menu). */
+  onAction?: () => void;
+}
+
+export default function InstallButton({ variant = 'pill', onAction }: Props) {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
@@ -40,6 +47,7 @@ export default function InstallButton() {
   if (installed || isStandalone()) return null;
 
   const handleClick = async () => {
+    onAction?.();
     if (deferredPrompt) {
       await deferredPrompt.prompt();
       setDeferredPrompt(null);
@@ -51,9 +59,13 @@ export default function InstallButton() {
 
   return (
     <>
-      <button className="pill-btn pill-btn-solid" onClick={handleClick}>
-        <Download size={15} />
-        Install
+      <button
+        className={variant === 'menu' ? 'menu-item' : 'pill-btn pill-btn-solid'}
+        role={variant === 'menu' ? 'menuitem' : undefined}
+        onClick={handleClick}
+      >
+        <Download size={15} aria-hidden="true" />
+        {variant === 'menu' ? 'Install as app' : 'Install'}
       </button>
       {showHelp && (
         <div className="modal-backdrop" onClick={() => setShowHelp(false)}>
