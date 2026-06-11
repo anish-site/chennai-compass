@@ -1,4 +1,4 @@
-import { ExternalLink, MapPin, Moon, Navigation, Sunrise, Sunset } from 'lucide-react';
+import { Bus, ExternalLink, MapPin, Moon, Navigation, Sunrise, Sunset, Train, TrainFront } from 'lucide-react';
 import type { BestTime, Place } from '../data/places';
 import { CATEGORY_META } from '../data/places';
 import { buildDirectionsUrl, buildGoogleSearchUrl } from '../utils/links';
@@ -85,6 +85,26 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
           })}
         </span>
       </div>
+
+      {place.transit && (
+        <div className="transit" aria-label="Nearest public transport">
+          {place.transit.metro && (
+            <span title="Nearest Metro station">
+              <TrainFront size={13} aria-label="Metro" /> {place.transit.metro}
+            </span>
+          )}
+          {place.transit.rail && (
+            <span title="Nearest suburban / MRTS station">
+              <Train size={13} aria-label="Suburban rail" /> {place.transit.rail}
+            </span>
+          )}
+          {place.transit.bus && (
+            <span title="Nearest bus stop">
+              <Bus size={13} aria-label="Bus stop" /> {place.transit.bus}
+            </span>
+          )}
+        </div>
+      )}
 
       <div className="card-tags">
         {place.tags.map((tag) => (

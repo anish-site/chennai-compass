@@ -23,6 +23,15 @@ export interface Place {
   bestTime: BestTime[];
   setting: Setting;
   tags: string[];
+  /** Nearest public transport — any subset; shown on the postcard. */
+  transit?: {
+    /** Chennai Metro station */
+    metro?: string;
+    /** Suburban / MRTS station */
+    rail?: string;
+    /** Bus stop */
+    bus?: string;
+  };
   /** Override for the Google search query when the name alone is ambiguous. */
   googleQuery?: string;
 }
@@ -67,6 +76,7 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening', 'Night'],
     setting: 'Outdoor',
     tags: ['sunrise', 'sundal', 'walks'],
+    transit: { rail: 'Light House MRTS', bus: 'Kannagi Statue / Marina' },
   },
   {
     id: 'bessie-beach',
@@ -81,6 +91,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['sunset', 'street food', 'chill'],
     googleQuery: 'Elliots Beach Besant Nagar Chennai',
+    transit: { rail: 'Thiruvanmiyur MRTS', bus: 'Besant Nagar Terminus' },
   },
   {
     id: 'kasimedu',
@@ -94,6 +105,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['sunrise', 'boats', 'photography'],
+    transit: { metro: 'Sir Theagaraya College', rail: 'Royapuram', bus: 'Kasimedu' },
   },
   {
     id: 'broken-bridge',
@@ -107,6 +119,7 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Outdoor',
     tags: ['golden hour', 'photography', 'offbeat'],
+    transit: { rail: 'Indira Nagar MRTS', bus: 'Urur Kuppam' },
   },
   {
     id: 'kapaleeshwarar',
@@ -120,6 +133,7 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['gopuram', 'architecture', 'mylapore'],
+    transit: { rail: 'Thirumayilai MRTS', bus: 'Mylapore Tank' },
   },
   {
     id: 'santhome',
@@ -133,6 +147,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['gothic', 'history', 'architecture'],
+    transit: { rail: 'Thirumayilai MRTS', bus: 'Santhome Church' },
   },
   {
     id: 'fort-st-george',
@@ -146,6 +161,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['history', 'museum', 'colonial'],
+    transit: { metro: 'High Court', rail: 'Chennai Fort', bus: 'Secretariat' },
   },
   {
     id: 'egmore-museum',
@@ -159,6 +175,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['bronzes', 'museum', 'architecture'],
+    transit: { metro: 'Egmore', rail: 'Chennai Egmore', bus: 'Egmore Museum' },
   },
   {
     id: 'dakshinachitra',
@@ -172,6 +189,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['culture', 'crafts', 'ecr'],
+    transit: { bus: 'DakshinaChitra (ECR buses)' },
   },
   {
     id: 'cholamandal',
@@ -185,6 +203,7 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['art', 'quiet', 'galleries'],
+    transit: { bus: 'Injambakkam (ECR buses)' },
   },
   {
     id: 'amethyst',
@@ -198,6 +217,7 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Outdoor',
     tags: ['garden', 'aesthetic', 'iced tea'],
+    transit: { metro: 'Thousand Lights', bus: 'Royapettah Hospital' },
   },
   {
     id: 'writers-cafe',
@@ -211,6 +231,7 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Indoor',
     tags: ['books', 'study spot', 'wifi'],
+    transit: { metro: 'Thousand Lights', bus: 'Royapettah' },
   },
   {
     id: 'ciclo',
@@ -224,6 +245,7 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Indoor',
     tags: ['waffles', 'group tables', 'quirky'],
+    transit: { rail: 'Kotturpuram MRTS', bus: 'Kotturpuram' },
   },
   {
     id: 'chamiers',
@@ -237,6 +259,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['breakfast', 'cheesecake', 'classic'],
+    transit: { rail: 'Greenways Road MRTS', bus: 'Chamiers Road' },
   },
   {
     id: 'murugan-idli',
@@ -250,6 +273,7 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Night'],
     setting: 'Indoor',
     tags: ['idli', 'jigarthanda', 'budget'],
+    transit: { rail: 'Mambalam', bus: 'Panagal Park' },
   },
   {
     id: 'ratna-cafe',
@@ -263,6 +287,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['sambar idli', 'legacy', 'budget'],
+    transit: { rail: 'Chepauk MRTS', bus: 'Ice House' },
   },
   {
     id: 'buhari',
@@ -276,6 +301,7 @@ export const places: Place[] = [
     bestTime: ['Night'],
     setting: 'Indoor',
     tags: ['chicken 65', 'biryani', 'late night'],
+    transit: { metro: 'LIC', bus: 'Anna Salai (LIC)' },
   },
   {
     id: 'sowcarpet',
@@ -290,6 +316,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['chaat', 'kulfi', 'street food'],
     googleQuery: 'Sowcarpet street food Chennai',
+    transit: { metro: 'High Court', rail: 'Chennai Park', bus: 'Mint' },
   },
   {
     id: 'jannal-kadai',
@@ -304,6 +331,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['bajji', 'hidden gem', 'mylapore'],
     googleQuery: 'Jannal Kadai Mylapore Chennai',
+    transit: { rail: 'Thirumayilai MRTS', bus: 'Mylapore Tank' },
   },
   {
     id: 'pondy-bazaar',
@@ -317,6 +345,7 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Outdoor',
     tags: ['bargains', 'street shopping', 'snacks'],
+    transit: { rail: 'Mambalam', bus: 'Panagal Park' },
   },
   {
     id: 'phoenix',
@@ -330,6 +359,7 @@ export const places: Place[] = [
     bestTime: ['Evening', 'Night'],
     setting: 'Indoor',
     tags: ['mall', 'movies', 'arcade'],
+    transit: { rail: 'Velachery MRTS', bus: 'Phoenix Mall' },
   },
   {
     id: 'semmozhi',
@@ -343,6 +373,7 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['garden', 'walks', 'budget'],
+    transit: { metro: 'Teynampet', bus: 'Semmozhi Poonga' },
   },
   {
     id: 'theosophical',
@@ -356,6 +387,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['banyan tree', 'quiet', 'nature'],
+    transit: { rail: 'Greenways Road MRTS', bus: 'Adyar Depot' },
   },
   {
     id: 'mahabalipuram',
@@ -369,6 +401,7 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['unesco', 'shore temple', 'road trip'],
+    transit: { bus: 'Mamallapuram Bus Stand (588)' },
   },
   {
     id: 'muttukadu',
@@ -382,6 +415,7 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['boating', 'backwaters', 'ecr'],
+    transit: { bus: 'Muttukadu Boat House (ECR buses)' },
   },
   {
     id: 'pulicat',
@@ -395,5 +429,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['flamingos', 'birding', 'road trip'],
+    transit: { rail: 'Ponneri (then share-auto)', bus: 'Pulicat (from Ponneri)' },
   },
 ];

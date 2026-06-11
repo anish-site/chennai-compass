@@ -12,6 +12,11 @@ hangouts I'd actually take my friends to. Built for my college peers.
 - Tap a card (or **Google it**) → opens the **Google search page** for that place (ratings,
   photos, timings live there).
 - Tap the **➤ arrow** → opens **Google Maps directions** straight away.
+- Each postcard lists the **nearest Metro / suburban–MRTS station and bus stop**.
+- A **Tips for Chennai** carousel rotates survival tips every 5 seconds (swipe or use the arrows).
+- The **☰ menu** has About, all the tips, a **city roads explainer**, the **Chennai Metro map**
+  and the install-as-app option. Drop `maps/city-roads.jpg` / `maps/metro-map.jpg` into
+  `public/` to show your own map images in those modals.
 - Use the **master filter**: search, category, free/paid & price level, vibe (date spot, group
   hangout, solo/study, family), best time of day, area, and indoor/outdoor.
 - The **About** button (top right) has a bit about me and about Chennai.

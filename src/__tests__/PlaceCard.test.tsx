@@ -35,6 +35,25 @@ describe('PlaceCard (postcard)', () => {
     expect(screen.getByText('#sunset')).toBeInTheDocument();
   });
 
+  it('shows nearest transit when provided and hides the row otherwise', () => {
+    const { rerender } = render(
+      <PlaceCard
+        place={{
+          ...place,
+          transit: { metro: 'Thirumayilai', rail: 'Mambalam', bus: 'Mylapore Tank' },
+        }}
+        index={0}
+      />
+    );
+    expect(screen.getByLabelText('Nearest public transport')).toBeInTheDocument();
+    expect(screen.getByText('Thirumayilai')).toBeInTheDocument();
+    expect(screen.getByText('Mambalam')).toBeInTheDocument();
+    expect(screen.getByText('Mylapore Tank')).toBeInTheDocument();
+
+    rerender(<PlaceCard place={place} index={0} />);
+    expect(screen.queryByLabelText('Nearest public transport')).not.toBeInTheDocument();
+  });
+
   it('shows an icon per best-time slot', () => {
     render(<PlaceCard place={{ ...place, bestTime: ['Morning', 'Night'] }} index={0} />);
     expect(screen.getByLabelText('Best in the morning')).toBeInTheDocument();
