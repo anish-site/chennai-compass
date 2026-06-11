@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import TipsBar from './components/TipsBar';
 import FilterBar from './components/FilterBar';
 import PlaceGrid from './components/PlaceGrid';
 import AboutModal from './components/AboutModal';
@@ -19,6 +20,7 @@ export default function App() {
       <Header onAboutOpen={() => setAboutOpen(true)} />
       <Hero />
       <main className="main">
+        <TipsBar />
         <FilterBar
           filters={filters}
           setFilters={setFilters}

@@ -67,11 +67,64 @@ button {
   color: var(--sunset-deep);
 }
 
-.header-actions {
+.menu-wrap {
+  position: relative;
+}
+
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid var(--cream-deep);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--sunset-deep);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.menu-btn:hover,
+.menu-btn[aria-expanded='true'] {
+  border-color: var(--sunset);
+  background: rgba(255, 107, 53, 0.07);
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 200px;
+  padding: 6px;
+  display: grid;
+  gap: 2px;
+  background: var(--white);
+  border: 1px solid var(--cream-deep);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lift);
+  z-index: 60;
+  animation: pop 0.16s ease both;
+}
+
+.menu-item {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 5px;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 9px;
+  background: none;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.menu-item:hover {
+  background: var(--cream);
+  color: var(--sunset-deep);
 }
 
 .pill-btn {
@@ -199,6 +252,62 @@ button {
   text-align: center;
   font-size: 0.85rem;
   color: var(--ink-soft);
+}
+
+/* ---------- Tips bar ---------- */
+
+.tipsbar {
+  margin: 6px 0 20px;
+}
+
+.tipsbar-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 9px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sunset-deep);
+}
+
+.tips-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 3px 2px 10px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tips-row::-webkit-scrollbar {
+  display: none;
+}
+
+.tip {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 320px;
+  padding: 10px 14px;
+  background: #fffbe9;
+  border: 1px solid rgba(255, 182, 39, 0.55);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(228, 80, 27, 0.06);
+  transform: rotate(-0.5deg);
+}
+
+.tip:nth-child(even) {
+  background: #fef0e4;
+  transform: rotate(0.5deg);
+}
+
+.tip-emoji {
+  font-size: 1.1rem;
 }
 
 /* ---------- Filter bar ---------- */
