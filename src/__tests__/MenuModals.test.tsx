@@ -41,7 +41,7 @@ describe('menu modals', () => {
     render(<App />);
     await openMenuItem(/chennai metro map/i);
     const book = screen.getByRole('link', { name: /book ticket/i });
-    expect(book).toHaveAttribute('href', expect.stringContaining('wa.me/918681996995'));
+    expect(book).toHaveAttribute('href', expect.stringContaining('wa.me/918300086000'));
     expect(book).toHaveAttribute('target', '_blank');
   });
 
