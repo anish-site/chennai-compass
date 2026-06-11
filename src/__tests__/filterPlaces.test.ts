@@ -18,7 +18,6 @@ const make = (overrides: Partial<Place> & { id: string }): Place => ({
   bestTime: ['Morning'],
   setting: 'Indoor',
   tags: [],
-  image: '',
   ...overrides,
 });
 

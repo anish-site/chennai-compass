@@ -7,8 +7,11 @@ hangouts I'd actually take my friends to. Built for my college peers.
 
 ## How it works
 
-- Tap any card → opens the **Google search page** for that place (ratings, photos, timings).
-- Tap the **➤ arrow** on a card → opens **Google Maps directions** straight away.
+- Every place is a **postcard/ticket**: a category stamp, a Chennai postmark, the description
+  scribbled like a note, the price as the *fare* — no photos, all personality.
+- Tap a card (or **Google it**) → opens the **Google search page** for that place (ratings,
+  photos, timings live there).
+- Tap the **➤ arrow** → opens **Google Maps directions** straight away.
 - Use the **master filter**: search, category, free/paid & price level, vibe (date spot, group
   hangout, solo/study, family), best time of day, area, and indoor/outdoor.
 - The **About** button (top right) has a bit about me and about Chennai.
@@ -31,7 +34,6 @@ array and the app picks it up automatically — filters, areas and all:
   bestTime: ['Evening'],      // Morning | Evening | Night
   setting: 'Indoor',          // Indoor | Outdoor
   tags: ['coffee', 'quiet'],
-  image: 'https://images.unsplash.com/…',
   googleQuery: 'My Favourite Spot Adyar Chennai', // optional, if the name alone is ambiguous
 }
 ```

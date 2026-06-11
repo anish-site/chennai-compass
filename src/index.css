@@ -12,6 +12,7 @@
   --shadow-lift: 0 14px 36px rgba(228, 80, 27, 0.16);
   --radius: 18px;
   --font-display: 'Fraunces', Georgia, serif;
+  --font-hand: 'Caveat', 'Comic Sans MS', cursive;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --header-h: 58px;
 }
@@ -359,7 +360,7 @@ button {
   text-underline-offset: 3px;
 }
 
-/* ---------- Cards ---------- */
+/* ---------- Cards (postcards / tickets) ---------- */
 
 .grid {
   display: grid;
@@ -368,11 +369,15 @@ button {
 }
 
 .card {
+  --accent: var(--sunset);
+  position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--white);
-  border-radius: var(--radius);
-  overflow: hidden;
+  padding: 16px 18px 14px;
+  background: #fffdf7;
+  border: 1px solid rgba(45, 42, 38, 0.08);
+  border-top: 5px solid var(--accent);
+  border-radius: 14px;
   box-shadow: var(--shadow-soft);
   cursor: pointer;
   outline-offset: 3px;
@@ -382,84 +387,215 @@ button {
 
 .card:hover,
 .card:focus-visible {
-  transform: translateY(-5px);
+  transform: translateY(-5px) rotate(-0.4deg);
   box-shadow: var(--shadow-lift);
 }
 
-.card-media {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--cream-deep);
-}
-
-.card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.45s ease;
-}
-
-.card:hover .card-media img {
-  transform: scale(1.06);
-}
-
-.card-fallback {
-  width: 100%;
-  height: 100%;
+.ticket-top {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 4rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-  background: linear-gradient(135deg, var(--sunset), var(--gold));
+  gap: 14px;
 }
 
-.badge {
-  position: absolute;
-  top: 10px;
-  padding: 4px 11px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  backdrop-filter: blur(6px);
-}
-
-.badge-category {
-  left: 10px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--sunset-deep);
-}
-
-.badge-price {
-  right: 10px;
-  background: rgba(14, 124, 123, 0.92);
-  color: var(--white);
-}
-
-.card-body {
+.stamp {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  padding: 16px 18px 18px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 64px;
+  height: 74px;
+  padding: 4px;
+  background: color-mix(in srgb, var(--accent) 10%, #fff);
+  border: 2px dashed var(--accent);
+  border-radius: 8px;
+  transform: rotate(-4deg);
+  transition: transform 0.22s ease;
 }
 
-.card-title-row {
+.card:hover .stamp {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.stamp-emoji {
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.stamp-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ticket-head {
+  flex: 1;
+  min-width: 0;
+}
+
+.postmark-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
 }
 
-.card-title-row h3 {
-  margin: 0;
+.ticket-no {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+}
+
+.postmark {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-top: -4px;
+  border: 1.5px solid rgba(45, 42, 38, 0.28);
+  border-radius: 50%;
+  font-size: 0.42rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-align: center;
+  line-height: 1.6;
+  color: rgba(45, 42, 38, 0.45);
+  transform: rotate(10deg);
+}
+
+.ticket-head h3 {
+  margin: 2px 0 0;
   font-family: var(--font-display);
-  font-size: 1.18rem;
+  font-size: 1.22rem;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
+}
+
+.route {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 5px 0 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.message {
+  flex: 1;
+  margin: 12px 0 0;
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.info-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.fare {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.fare strong {
+  color: var(--accent);
+  font-size: 0.82rem;
+}
+
+.times {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.tag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--cream-deep);
+  color: var(--sunset-deep);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.perforation {
+  position: relative;
+  margin: 14px -18px 0;
+  border-top: 2px dashed rgba(45, 42, 38, 0.18);
+}
+
+.perforation::before,
+.perforation::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cream);
+}
+
+.perforation::before {
+  left: -8px;
+}
+
+.perforation::after {
+  right: -8px;
+}
+
+.ticket-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1.5px solid var(--accent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.google-btn:hover {
+  background: var(--accent);
+  color: var(--white);
 }
 
 .dir-btn {
@@ -471,47 +607,14 @@ button {
   height: 34px;
   border: none;
   border-radius: 50%;
-  background: var(--sea);
+  background: var(--accent);
   color: var(--white);
-  transition: transform 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease, filter 0.18s ease;
 }
 
 .dir-btn:hover {
-  background: #0a5c5b;
+  filter: brightness(0.88);
   transform: scale(1.1) rotate(8deg);
-}
-
-.card-area {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin: 5px 0 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--sea);
-}
-
-.card-desc {
-  margin: 9px 0 0;
-  font-size: 0.88rem;
-  color: var(--ink-soft);
-  flex: 1;
-}
-
-.card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 13px;
-}
-
-.tag {
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: var(--cream-deep);
-  color: var(--sunset-deep);
-  font-size: 0.7rem;
-  font-weight: 600;
 }
 
 /* ---------- Empty state ---------- */
@@ -686,9 +789,5 @@ button {
 
   .filterbar {
     position: static;
-  }
-
-  .wordmark span {
-    display: none;
   }
 }

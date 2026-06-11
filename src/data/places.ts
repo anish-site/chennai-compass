@@ -23,7 +23,6 @@ export interface Place {
   bestTime: BestTime[];
   setting: Setting;
   tags: string[];
-  image: string;
   /** Override for the Google search query when the name alone is ambiguous. */
   googleQuery?: string;
 }
@@ -42,11 +41,19 @@ export const VIBES: Vibe[] = ['Date spot', 'Group hangout', 'Solo / study', 'Fam
 export const BEST_TIMES: BestTime[] = ['Morning', 'Evening', 'Night'];
 export const SETTINGS: Setting[] = ['Indoor', 'Outdoor'];
 
-const img = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=60`;
+/** Stamp emoji + accent colour for each category — drives the postcard look. */
+export const CATEGORY_META: Record<Category, { emoji: string; accent: string }> = {
+  'Cafés': { emoji: '☕', accent: '#8c5a3c' },
+  Beaches: { emoji: '🌊', accent: '#0e7c7b' },
+  Food: { emoji: '🍛', accent: '#e4501b' },
+  Heritage: { emoji: '🛕', accent: '#a4243b' },
+  Shopping: { emoji: '🛍️', accent: '#c2185b' },
+  Hangouts: { emoji: '🌳', accent: '#3e7c2f' },
+  'Day Trips': { emoji: '🚌', accent: '#2d6cb5' },
+};
 
-// ✏️ This is YOUR guide — edit freely. Add a place, change a description,
-// swap an image. Every field here drives the app automatically.
+// ✏️ This is YOUR guide — edit freely. Add a place, change a description.
+// Every field here drives the app automatically.
 export const places: Place[] = [
   {
     id: 'marina-beach',
@@ -60,7 +67,6 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening', 'Night'],
     setting: 'Outdoor',
     tags: ['sunrise', 'sundal', 'walks'],
-    image: img('photo-1507525428034-b723cf961d3e'),
   },
   {
     id: 'bessie-beach',
@@ -74,7 +80,6 @@ export const places: Place[] = [
     bestTime: ['Evening', 'Night'],
     setting: 'Outdoor',
     tags: ['sunset', 'street food', 'chill'],
-    image: img('photo-1519046904884-53103b34b206'),
     googleQuery: 'Elliots Beach Besant Nagar Chennai',
   },
   {
@@ -89,7 +94,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['sunrise', 'boats', 'photography'],
-    image: img('photo-1495616811223-4d98c6e9c869'),
   },
   {
     id: 'broken-bridge',
@@ -103,7 +107,6 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Outdoor',
     tags: ['golden hour', 'photography', 'offbeat'],
-    image: img('photo-1500375592092-40eb2168fd21'),
   },
   {
     id: 'kapaleeshwarar',
@@ -117,7 +120,6 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['gopuram', 'architecture', 'mylapore'],
-    image: img('photo-1582510003544-4d00b7f74220'),
   },
   {
     id: 'santhome',
@@ -131,7 +133,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['gothic', 'history', 'architecture'],
-    image: img('photo-1486325212027-8081e485255e'),
   },
   {
     id: 'fort-st-george',
@@ -145,7 +146,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['history', 'museum', 'colonial'],
-    image: img('photo-1564501049412-61c2a3083791'),
   },
   {
     id: 'egmore-museum',
@@ -159,7 +159,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['bronzes', 'museum', 'architecture'],
-    image: img('photo-1554907984-15263bfd63bd'),
   },
   {
     id: 'dakshinachitra',
@@ -173,7 +172,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['culture', 'crafts', 'ecr'],
-    image: img('photo-1524492412937-b28074a5d7da'),
   },
   {
     id: 'cholamandal',
@@ -187,7 +185,6 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['art', 'quiet', 'galleries'],
-    image: img('photo-1513364776144-60967b0f800f'),
   },
   {
     id: 'amethyst',
@@ -201,7 +198,6 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Outdoor',
     tags: ['garden', 'aesthetic', 'iced tea'],
-    image: img('photo-1525610553991-2bede1a236e2'),
   },
   {
     id: 'writers-cafe',
@@ -215,7 +211,6 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Indoor',
     tags: ['books', 'study spot', 'wifi'],
-    image: img('photo-1554118811-1e0d58224f24'),
   },
   {
     id: 'ciclo',
@@ -229,7 +224,6 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Indoor',
     tags: ['waffles', 'group tables', 'quirky'],
-    image: img('photo-1501339847302-ac426a4a7cbb'),
   },
   {
     id: 'chamiers',
@@ -243,7 +237,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['breakfast', 'cheesecake', 'classic'],
-    image: img('photo-1495474472287-4d71bcdd2085'),
   },
   {
     id: 'murugan-idli',
@@ -257,7 +250,6 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Night'],
     setting: 'Indoor',
     tags: ['idli', 'jigarthanda', 'budget'],
-    image: img('photo-1589301760014-d929f3979dbc'),
   },
   {
     id: 'ratna-cafe',
@@ -271,7 +263,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Indoor',
     tags: ['sambar idli', 'legacy', 'budget'],
-    image: img('photo-1630383249896-424e482df921'),
   },
   {
     id: 'buhari',
@@ -285,7 +276,6 @@ export const places: Place[] = [
     bestTime: ['Night'],
     setting: 'Indoor',
     tags: ['chicken 65', 'biryani', 'late night'],
-    image: img('photo-1563379091339-03b21ab4a4f8'),
   },
   {
     id: 'sowcarpet',
@@ -299,7 +289,6 @@ export const places: Place[] = [
     bestTime: ['Evening', 'Night'],
     setting: 'Outdoor',
     tags: ['chaat', 'kulfi', 'street food'],
-    image: img('photo-1555939594-58d7cb561ad1'),
     googleQuery: 'Sowcarpet street food Chennai',
   },
   {
@@ -314,7 +303,6 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['bajji', 'hidden gem', 'mylapore'],
-    image: img('photo-1601050690597-df0568f70950'),
     googleQuery: 'Jannal Kadai Mylapore Chennai',
   },
   {
@@ -329,7 +317,6 @@ export const places: Place[] = [
     bestTime: ['Evening'],
     setting: 'Outdoor',
     tags: ['bargains', 'street shopping', 'snacks'],
-    image: img('photo-1472851294608-062f824d29cc'),
   },
   {
     id: 'phoenix',
@@ -343,7 +330,6 @@ export const places: Place[] = [
     bestTime: ['Evening', 'Night'],
     setting: 'Indoor',
     tags: ['mall', 'movies', 'arcade'],
-    image: img('photo-1441986300917-64674bd600d8'),
   },
   {
     id: 'semmozhi',
@@ -357,7 +343,6 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['garden', 'walks', 'budget'],
-    image: img('photo-1441974231531-c6227db76b6e'),
   },
   {
     id: 'theosophical',
@@ -371,7 +356,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['banyan tree', 'quiet', 'nature'],
-    image: img('photo-1448375240586-882707db888b'),
   },
   {
     id: 'mahabalipuram',
@@ -385,7 +369,6 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['unesco', 'shore temple', 'road trip'],
-    image: img('photo-1524230507669-5ff97982bb5e'),
   },
   {
     id: 'muttukadu',
@@ -399,7 +382,6 @@ export const places: Place[] = [
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
     tags: ['boating', 'backwaters', 'ecr'],
-    image: img('photo-1544551763-46a013bb70d5'),
   },
   {
     id: 'pulicat',
@@ -413,6 +395,5 @@ export const places: Place[] = [
     bestTime: ['Morning'],
     setting: 'Outdoor',
     tags: ['flamingos', 'birding', 'road trip'],
-    image: img('photo-1444464666168-49d633b86797'),
   },
 ];
