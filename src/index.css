@@ -271,25 +271,72 @@ button {
   color: var(--sunset-deep);
 }
 
-.tips-row {
+.tips-carousel {
   display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 3px 2px 10px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  align-items: stretch;
+  gap: 8px;
 }
 
-.tips-row::-webkit-scrollbar {
-  display: none;
+.tip-nav {
+  flex-shrink: 0;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--cream-deep);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--sunset-deep);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.tip-nav:hover {
+  border-color: var(--sunset);
+  background: rgba(255, 107, 53, 0.07);
+}
+
+.tip-current {
+  flex: 1;
+  min-height: 58px;
+  animation: rise 0.35s ease both;
+}
+
+.tip-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.tip-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--cream-deep);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.tip-dot-active {
+  background: var(--sunset);
+  transform: scale(1.25);
+}
+
+.tips-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .tip {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 9px;
-  max-width: 320px;
   padding: 10px 14px;
   background: #fffbe9;
   border: 1px solid rgba(255, 182, 39, 0.55);
@@ -639,6 +686,29 @@ button {
   color: var(--ink-soft);
 }
 
+.transit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 14px;
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 1px dotted rgba(45, 42, 38, 0.14);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.transit span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.transit svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
 .card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -827,6 +897,92 @@ button {
   margin: 0 0 10px;
   font-size: 0.92rem;
   color: var(--ink-soft);
+}
+
+.modal-intro {
+  margin: 0 0 14px;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.modal-map {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  border: 1px solid var(--cream-deep);
+}
+
+.roads-list,
+.metro-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.roads-list strong {
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.roads-list p,
+.metro-lines p {
+  margin: 2px 0 0;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.metro-line {
+  display: inline-block;
+  padding: 2px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.metro-blue {
+  background: #1565c0;
+}
+
+.metro-green {
+  background: #2e7d32;
+}
+
+.metro-note {
+  margin: 14px 0;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.metro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.metro-link {
+  text-decoration: none;
+}
+
+.book-ticket-btn {
+  text-decoration: none;
+  background: #25d366;
+  border-color: #25d366;
+}
+
+.book-ticket-btn:hover {
+  background: #1ebe5b;
+  border-color: #1ebe5b;
+  color: var(--white);
+}
+
+.metro-whatsapp-note {
+  margin: 10px 0 0;
 }
 
 .install-steps {
