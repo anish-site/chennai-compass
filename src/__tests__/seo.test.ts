@@ -86,3 +86,21 @@ describe('sitemap & llms.txt', () => {
     for (const tip of tips) expect(txt).toContain(tip.text);
   });
 });
+
+describe('social share banner', () => {
+  it('exists as a 1200×630 PNG (matches the og:image meta tags)', async () => {
+    const { readFileSync } = await import('node:fs');
+    const png = readFileSync('public/og-banner.png');
+    // PNG signature, then width/height from the IHDR chunk
+    expect([...png.subarray(0, 8)]).toEqual([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+    expect(png.readUInt32BE(16)).toBe(1200);
+    expect(png.readUInt32BE(20)).toBe(630);
+  });
+
+  it('is referenced by the OG and Twitter meta tags', async () => {
+    const { readFileSync } = await import('node:fs');
+    const html = readFileSync('index.html', 'utf8');
+    expect(html).toContain(`${SITE.url}/og-banner.png`);
+    expect(html).toContain('summary_large_image');
+  });
+});
