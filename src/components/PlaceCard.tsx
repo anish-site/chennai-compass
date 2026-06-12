@@ -121,6 +121,11 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
       )}
 
       <div className="card-tags">
+        {place.community && (
+          <span className="tag tag-community">
+            <span aria-hidden="true">🤝</span> friend's pick
+          </span>
+        )}
         {place.tags.map((tag) => (
           <span key={tag} className="tag">
             #{tag}

@@ -40,6 +40,20 @@ describe('JSON-LD structured data', () => {
   it('cannot break out of its <script> tag', () => {
     expect(buildJsonLd()).not.toContain('<');
   });
+
+  it('includes community places when a merged list is passed (build-time sheet fetch)', () => {
+    const community = {
+      ...places[0],
+      id: 'community-kovalam',
+      name: 'Kovalam Beach',
+      community: true,
+    };
+    const merged = JSON.parse(buildJsonLd([...places, community]));
+    expect(merged['@graph'][1].numberOfItems).toBe(places.length + 1);
+    expect(JSON.stringify(merged)).toContain('Kovalam Beach');
+    expect(buildNoscriptHtml([...places, community])).toContain('Kovalam Beach');
+    expect(buildLlmsTxt([...places, community])).toContain('Kovalam Beach');
+  });
 });
 
 describe('noscript fallback content', () => {

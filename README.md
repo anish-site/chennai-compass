@@ -48,6 +48,26 @@ array and the app picks it up automatically — filters, areas and all:
 }
 ```
 
+## Friend recommendations via Google Sheets (ready to switch on)
+
+The whole pipeline is built — it activates the moment a sheet URL is configured:
+
+1. Create a **Google Form** with these questions: *Name, Area, Category (dropdown: Cafés,
+   Beaches, Food, Heritage, Shopping, Hangouts, Day Trips), Description, Price (dropdown: Free,
+   ₹, ₹₹, ₹₹₹), Vibes (checkboxes), Best time (checkboxes: Morning, Evening, Night), Setting
+   (dropdown: Indoor, Outdoor), Tags*.
+2. In the form's Responses tab click **Link to Sheets**, then add an **Approved** checkbox
+   column in the sheet. Only rows you tick ever appear.
+3. **File → Share → Publish to web → CSV**, copy the URL, and paste it into `SHEET_CSV_URL`
+   in [`src/data/config.ts`](src/data/config.ts). Push once.
+
+From then on: visitors see approved places on every page load (with a 🤝 *friend's pick* tag,
+fully filterable/searchable like curated ones). For the **SEO** side, create a free
+**Deploy Hook** in Vercel (Settings → Git → Deploy Hooks) and open its URL after approving rows
+— the rebuild folds the new places into the structured data, noscript content and llms.txt too.
+Bad rows can't break anything: unknown categories are skipped, weird values fall back to safe
+defaults, and a dead sheet just means no community places.
+
 ## SEO / AEO (all invisible)
 
 The build generates crawler-facing content automatically from the place data — nothing shows on

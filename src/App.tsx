@@ -13,14 +13,18 @@ import SurpriseModal from './components/SurpriseModal';
 import { places } from './data/places';
 import { EMPTY_FILTERS, filterPlaces, uniqueAreas } from './utils/filterPlaces';
 import { useTheme } from './hooks/useTheme';
+import { useCommunityPlaces } from './hooks/useCommunityPlaces';
 
 export default function App() {
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [activeModal, setActiveModal] = useState<MenuModal | null>(null);
   const { theme, toggle } = useTheme();
+  const community = useCommunityPlaces();
 
-  const areas = useMemo(() => uniqueAreas(places), []);
-  const filtered = useMemo(() => filterPlaces(places, filters), [filters]);
+  // Curated places + approved friend recommendations from the Google Sheet.
+  const allPlaces = useMemo(() => [...places, ...community], [community]);
+  const areas = useMemo(() => uniqueAreas(allPlaces), [allPlaces]);
+  const filtered = useMemo(() => filterPlaces(allPlaces, filters), [allPlaces, filters]);
 
   const closeModal = () => setActiveModal(null);
 
@@ -47,7 +51,7 @@ export default function App() {
       {activeModal === 'cityMap' && <CityMapModal onClose={closeModal} />}
       {activeModal === 'metro' && <MetroMapModal onClose={closeModal} />}
       {activeModal === 'phrasebook' && <PhrasebookModal onClose={closeModal} />}
-      {activeModal === 'surprise' && <SurpriseModal places={places} onClose={closeModal} />}
+      {activeModal === 'surprise' && <SurpriseModal places={allPlaces} onClose={closeModal} />}
     </>
   );
 }

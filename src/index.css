@@ -803,6 +803,11 @@ button {
   font-weight: 600;
 }
 
+.tag-community {
+  background: var(--sea);
+  color: #fff;
+}
+
 .perforation {
   position: relative;
   margin: 14px -18px 0;
