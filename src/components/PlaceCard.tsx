@@ -1,7 +1,9 @@
-import { Bus, ExternalLink, MapPin, Moon, Navigation, Sunrise, Sunset, Train, TrainFront } from 'lucide-react';
+import { useState } from 'react';
+import { Bus, ExternalLink, MapPin, Moon, Navigation, Share2, Sunrise, Sunset, Train, TrainFront } from 'lucide-react';
 import type { BestTime, Place } from '../data/places';
 import { CATEGORY_META } from '../data/places';
 import { buildDirectionsUrl, buildGoogleSearchUrl } from '../utils/links';
+import { sharePlace } from '../utils/shareCard';
 
 const TIME_ICONS: Record<BestTime, { icon: typeof Sunrise; label: string }> = {
   Morning: { icon: Sunrise, label: 'Best in the morning' },
@@ -17,6 +19,18 @@ function ticketNumber(id: string): number {
 
 export default function PlaceCard({ place, index }: { place: Place; index: number }) {
   const meta = CATEGORY_META[place.category];
+  const [sharing, setSharing] = useState(false);
+
+  const share = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (sharing) return;
+    setSharing(true);
+    try {
+      await sharePlace(place);
+    } finally {
+      setSharing(false);
+    }
+  };
 
   const openGoogle = () => {
     window.open(buildGoogleSearchUrl(place), '_blank', 'noopener,noreferrer');
@@ -120,14 +134,25 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
         <button className="google-btn" onClick={openGoogleFromButton}>
           Google it <ExternalLink size={13} aria-hidden="true" />
         </button>
-        <button
-          className="dir-btn"
-          onClick={openDirections}
-          aria-label={`Directions to ${place.name}`}
-          title="Get directions"
-        >
-          <Navigation size={16} />
-        </button>
+        <div className="action-icons">
+          <button
+            className="share-btn"
+            onClick={share}
+            disabled={sharing}
+            aria-label={`Share ${place.name}`}
+            title="Share this postcard"
+          >
+            <Share2 size={16} />
+          </button>
+          <button
+            className="dir-btn"
+            onClick={openDirections}
+            aria-label={`Directions to ${place.name}`}
+            title="Get directions"
+          >
+            <Navigation size={16} />
+          </button>
+        </div>
       </div>
     </article>
   );

@@ -8,12 +8,15 @@ import AboutModal from './components/AboutModal';
 import TipsModal from './components/TipsModal';
 import CityMapModal from './components/CityMapModal';
 import MetroMapModal from './components/MetroMapModal';
+import SurpriseModal from './components/SurpriseModal';
 import { places } from './data/places';
 import { EMPTY_FILTERS, filterPlaces, uniqueAreas } from './utils/filterPlaces';
+import { useTheme } from './hooks/useTheme';
 
 export default function App() {
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [activeModal, setActiveModal] = useState<MenuModal | null>(null);
+  const { theme, toggle } = useTheme();
 
   const areas = useMemo(() => uniqueAreas(places), []);
   const filtered = useMemo(() => filterPlaces(places, filters), [filters]);
@@ -22,8 +25,8 @@ export default function App() {
 
   return (
     <>
-      <Header onOpen={setActiveModal} />
-      <Hero />
+      <Header onOpen={setActiveModal} theme={theme} onToggleTheme={toggle} />
+      <Hero onSurprise={() => setActiveModal('surprise')} />
       <main className="main">
         <TipsBar />
         <FilterBar
@@ -42,6 +45,7 @@ export default function App() {
       {activeModal === 'tips' && <TipsModal onClose={closeModal} />}
       {activeModal === 'cityMap' && <CityMapModal onClose={closeModal} />}
       {activeModal === 'metro' && <MetroMapModal onClose={closeModal} />}
+      {activeModal === 'surprise' && <SurpriseModal places={places} onClose={closeModal} />}
     </>
   );
 }
