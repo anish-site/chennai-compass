@@ -278,11 +278,26 @@ button {
   color: rgba(255, 255, 255, 0.94);
 }
 
-.hero-surprise {
+.hero-sun {
   display: inline-flex;
   align-items: center;
+  gap: 7px;
+  margin: 18px 0 0;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.hero-surprise {
+  display: flex;
+  align-items: center;
   gap: 8px;
-  margin-top: 24px;
+  margin: 20px auto 0;
   padding: 11px 22px;
   border: none;
   border-radius: 999px;
@@ -866,6 +881,59 @@ button {
   gap: 8px;
 }
 
+.distance {
+  color: var(--ink-soft);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.stamp-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px dashed var(--accent);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--accent);
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.stamp-btn:hover {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+.stamp-btn-active {
+  background: var(--accent);
+  border-style: solid;
+  color: #fff;
+}
+
+.visited-stamp {
+  position: absolute;
+  top: 40px;
+  right: 14px;
+  z-index: 2;
+  padding: 3px 10px;
+  border: 2.5px solid #c0392b;
+  border-radius: 6px;
+  color: #c0392b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transform: rotate(-14deg);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+[data-theme='dark'] .visited-stamp {
+  border-color: #ff7f6e;
+  color: #ff7f6e;
+}
+
 .share-btn {
   flex-shrink: 0;
   display: inline-flex;
@@ -1208,6 +1276,93 @@ button {
 
 .phrase-note {
   margin: 3px 0 0;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.osm-credit {
+  font-size: 0.72rem !important;
+  opacity: 0.75;
+}
+
+.passport-progress {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.passport-progress strong {
+  font-size: 1.3rem;
+  color: var(--sunset-deep);
+}
+
+.passport-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cream-deep);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.passport-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sunset), var(--gold));
+  transition: width 0.4s ease;
+}
+
+.passport-grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 7px;
+}
+
+.passport-stamp {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1.5px dashed var(--hairline);
+  border-radius: 9px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  opacity: 0.55;
+}
+
+.passport-stamp.stamped {
+  border-style: solid;
+  border-color: var(--sea);
+  color: var(--ink);
+  opacity: 1;
+  background: color-mix(in srgb, var(--sea) 8%, transparent);
+}
+
+.passport-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.passport-check {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--sea);
+}
+
+.passport-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.passport-note {
+  margin: 12px 0 0;
   font-size: 0.82rem;
   color: var(--ink-soft);
 }

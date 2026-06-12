@@ -11,6 +11,8 @@ export interface Filters {
   bestTimes: BestTime[];
   areas: string[];
   settings: Setting[];
+  /** Max straight-line distance (km) when "near me" is active. */
+  maxKm: number | null;
 }
 
 export const EMPTY_FILTERS: Filters = {
@@ -21,6 +23,7 @@ export const EMPTY_FILTERS: Filters = {
   bestTimes: [],
   areas: [],
   settings: [],
+  maxKm: null,
 };
 
 function matchesPrice(place: Place, prices: PriceFilter[]): boolean {
@@ -52,7 +55,9 @@ export function filterPlaces(places: Place[], filters: Filters): Place[] {
       (filters.bestTimes.length === 0 ||
         place.bestTime.some((t) => filters.bestTimes.includes(t))) &&
       (filters.areas.length === 0 || filters.areas.includes(place.area)) &&
-      (filters.settings.length === 0 || filters.settings.includes(place.setting))
+      (filters.settings.length === 0 || filters.settings.includes(place.setting)) &&
+      (filters.maxKm === null ||
+        (place.distanceKm !== undefined && place.distanceKm <= filters.maxKm))
   );
 }
 
@@ -63,7 +68,8 @@ export function countPanelFilters(filters: Filters): number {
     filters.vibes.length +
     filters.bestTimes.length +
     filters.areas.length +
-    filters.settings.length
+    filters.settings.length +
+    (filters.maxKm !== null ? 1 : 0)
   );
 }
 

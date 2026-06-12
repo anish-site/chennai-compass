@@ -59,6 +59,37 @@ describe('PlaceCard (postcard)', () => {
     expect(screen.queryByLabelText('Nearest public transport')).not.toBeInTheDocument();
   });
 
+  it('shows the distance on the route line when located', () => {
+    render(<PlaceCard place={{ ...place, distanceKm: 2.34 }} index={0} />);
+    expect(screen.getByText(/~2\.3 km/)).toBeInTheDocument();
+  });
+
+  it('stamps as visited via the stamp button without opening Google', async () => {
+    const onToggleVisited = vi.fn();
+    const { rerender } = render(
+      <PlaceCard place={place} index={0} visited={false} onToggleVisited={onToggleVisited} />
+    );
+    expect(screen.queryByText('Visited ✓')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: /stamp bessie beach/i }));
+    expect(onToggleVisited).toHaveBeenCalledWith('bessie');
+    expect(window.open).not.toHaveBeenCalled();
+
+    rerender(
+      <PlaceCard place={place} index={0} visited onToggleVisited={onToggleVisited} />
+    );
+    expect(screen.getByText('Visited ✓')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /stamp bessie beach/i })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    );
+  });
+
+  it('hides the stamp button when no visited handler is provided (e.g. Surprise modal)', () => {
+    render(<PlaceCard place={place} index={0} />);
+    expect(screen.queryByRole('button', { name: /stamp/i })).not.toBeInTheDocument();
+  });
+
   it("marks community places with a friend's pick tag", () => {
     const { rerender } = render(<PlaceCard place={{ ...place, community: true }} index={0} />);
     expect(screen.getByText(/friend's pick/i)).toBeInTheDocument();

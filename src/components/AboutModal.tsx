@@ -55,6 +55,7 @@ export default function AboutModal({ open, onClose }: { open: boolean; onClose: 
             Tap any card to look it up on Google, or hit the arrow for directions. Now go explore
             — the city's waiting.
           </p>
+          <p className="osm-credit">Some place coordinates © OpenStreetMap contributors.</p>
         </section>
       </div>
     </div>

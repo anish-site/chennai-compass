@@ -19,6 +19,12 @@ hangouts I'd actually take my friends to. Built for my college peers.
 - **Dark mode** (a warm Chennai-night palette, not a black inversion) via the header toggle.
 - **Talk like a local** — a starter Tamil phrasebook (vanakkam, nandri, anna, evlo, eppo…) for
   newcomers, editable in `src/data/phrasebook.ts`.
+- **Near me** — one tap sorts every card by straight-line distance from you (with "under 3/5/10
+  km" filters). Pure Haversine math on bundled coordinates; no API, location never leaves the
+  device.
+- **Sunrise/sunset countdown** in the hero — computed locally for Chennai, no API.
+- **My passport** — stamp places you've visited; progress lives on-device, and a tiny backup
+  link (`#p=…`) restores or shares your stamps on any phone. No accounts, no backend.
 - The **☰ menu** has About, all the tips, a **city roads explainer**, the **Chennai Metro map**
   and the install-as-app option. Drop `maps/city-roads.jpg` / `maps/metro-map.jpg` into
   `public/` to show your own map images in those modals.
@@ -57,7 +63,10 @@ The whole pipeline is built — it activates the moment a sheet URL is configure
    ₹, ₹₹, ₹₹₹), Vibes (checkboxes), Best time (checkboxes: Morning, Evening, Night), Setting
    (dropdown: Indoor, Outdoor), Tags*.
 2. In the form's Responses tab click **Link to Sheets**, then add an **Approved** checkbox
-   column in the sheet. Only rows you tick ever appear.
+   column in the sheet. Only rows you tick ever appear. Coordinates are **auto-geocoded via
+   OpenStreetMap on each deploy**, so approved places join "near me" sorting after the next
+   deploy-hook rebuild (until then they show without a distance). If a pin lands wrong, add
+   optional Latitude/Longitude columns to override it.
 3. **File → Share → Publish to web → CSV**, copy the URL, and paste it into `SHEET_CSV_URL`
    in [`src/data/config.ts`](src/data/config.ts). Push once.
 

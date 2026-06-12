@@ -4,9 +4,11 @@ import PlaceCard from './PlaceCard';
 interface Props {
   places: Place[];
   onClear: () => void;
+  visited: string[];
+  onToggleVisited: (id: string) => void;
 }
 
-export default function PlaceGrid({ places, onClear }: Props) {
+export default function PlaceGrid({ places, onClear, visited, onToggleVisited }: Props) {
   if (places.length === 0) {
     return (
       <div className="empty-state">
@@ -25,7 +27,13 @@ export default function PlaceGrid({ places, onClear }: Props) {
   return (
     <div className="grid">
       {places.map((place, i) => (
-        <PlaceCard key={place.id} place={place} index={i} />
+        <PlaceCard
+          key={place.id}
+          place={place}
+          index={i}
+          visited={visited.includes(place.id)}
+          onToggleVisited={onToggleVisited}
+        />
       ))}
     </div>
   );

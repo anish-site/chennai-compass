@@ -2,6 +2,7 @@
 // storage test can assert we never sprawl beyond a tiny, known footprint.
 export const STORAGE_KEYS = {
   theme: 'cc-theme',
+  visited: 'cc-visited',
 } as const;
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

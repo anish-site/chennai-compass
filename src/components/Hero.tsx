@@ -1,4 +1,5 @@
 import { Sparkles } from 'lucide-react';
+import SunBadge from './SunBadge';
 
 export default function Hero({ onSurprise }: { onSurprise: () => void }) {
   return (
@@ -12,6 +13,7 @@ export default function Hero({ onSurprise }: { onSurprise: () => void }) {
           The beaches, cafés, bajji stalls and hideouts I'd actually take you to — curated by a
           local, for my people.
         </p>
+        <SunBadge />
         <button className="hero-surprise" onClick={onSurprise}>
           <Sparkles size={17} aria-hidden="true" /> Surprise me
         </button>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, SlidersHorizontal, X } from 'lucide-react';
+import { LocateFixed, Search, SlidersHorizontal, X } from 'lucide-react';
 import {
   BEST_TIMES,
   CATEGORIES,
@@ -13,11 +13,19 @@ import {
   type Filters,
   type PriceFilter,
 } from '../utils/filterPlaces';
+import type { GeoStatus } from '../hooks/useGeolocation';
 
 const PRICE_OPTIONS: PriceFilter[] = ['Free', 'Paid', '₹', '₹₹', '₹₹₹'];
+const DISTANCE_OPTIONS = [3, 5, 10];
 
 function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
+}
+
+export interface NearMe {
+  active: boolean;
+  status: GeoStatus;
+  toggle: () => void;
 }
 
 interface Props {
@@ -25,9 +33,17 @@ interface Props {
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
   areas: string[];
   resultCount: number;
+  nearMe: NearMe;
 }
 
-export default function FilterBar({ filters, setFilters, areas, resultCount }: Props) {
+function nearMeLabel(nearMe: NearMe): string {
+  if (nearMe.active && nearMe.status === 'locating') return 'Locating…';
+  if (nearMe.status === 'denied') return 'Location off';
+  if (nearMe.status === 'unsupported') return 'No location';
+  return 'Near me';
+}
+
+export default function FilterBar({ filters, setFilters, areas, resultCount, nearMe }: Props) {
   const [panelOpen, setPanelOpen] = useState(false);
   const panelCount = countPanelFilters(filters);
   const anyActive =
@@ -70,6 +86,15 @@ export default function FilterBar({ filters, setFilters, areas, resultCount }: P
           />
         </div>
         <button
+          className={`pill-btn filter-toggle ${nearMe.active ? 'filter-toggle-active' : ''}`}
+          onClick={nearMe.toggle}
+          aria-pressed={nearMe.active}
+          disabled={nearMe.status === 'unsupported'}
+        >
+          <LocateFixed size={15} />
+          {nearMeLabel(nearMe)}
+        </button>
+        <button
           className={`pill-btn filter-toggle ${panelOpen || panelCount > 0 ? 'filter-toggle-active' : ''}`}
           onClick={() => setPanelOpen((o) => !o)}
           aria-expanded={panelOpen}
@@ -108,6 +133,25 @@ export default function FilterBar({ filters, setFilters, areas, resultCount }: P
 
       {panelOpen && (
         <div className="filter-panel">
+          {nearMe.active && (
+            <div className="filter-group" role="group" aria-label="Distance">
+              <span className="filter-group-label">Distance</span>
+              <div className="chip-row">
+                {DISTANCE_OPTIONS.map((km) => (
+                  <button
+                    key={km}
+                    className={`chip ${filters.maxKm === km ? 'chip-active' : ''}`}
+                    aria-pressed={filters.maxKm === km}
+                    onClick={() =>
+                      setFilters((f) => ({ ...f, maxKm: f.maxKm === km ? null : km }))
+                    }
+                  >
+                    Under {km} km
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           {chipRow('Price', PRICE_OPTIONS, filters.prices, (v) =>
             setFilters((f) => ({ ...f, prices: toggle(f.prices, v) }))
           )}
