@@ -34,7 +34,6 @@ export const phrasebook: PhraseGroup[] = [
       { tamil: 'Anna', script: 'அண்ணா', meaning: 'Elder brother', note: 'Friendly way to address any man around your age or older — autos, shops, waiters.' },
       { tamil: 'Akka', script: 'அக்கா', meaning: 'Elder sister', note: 'The “anna” for women. Respectful and warm.' },
       { tamil: 'Thambi', script: 'தம்பி', meaning: 'Younger brother', note: 'For someone younger than you.' },
-      { tamil: 'Mama / Mami', script: 'மாமா / மாமி', meaning: 'Uncle / aunty', note: 'For older folks — tea stalls, neighbours.' },
     ],
   },
   {
@@ -56,7 +55,6 @@ export const phrasebook: PhraseGroup[] = [
       { tamil: 'Time enna?', script: 'டைம் என்ன?', meaning: 'What’s the time?', note: '' },
       { tamil: 'Konjam', script: 'கொஞ்சம்', meaning: 'A little / please', note: '“Konjam” softens any request.' },
       { tamil: 'Romba', script: 'ரொம்ப', meaning: 'Very / a lot', note: '“Romba nandri” = thanks a lot.' },
-      { tamil: 'Korai', script: 'குறை', meaning: 'Reduce (the price)', note: 'Bargaining: “konjam korai-nga” = lower it a bit please.' },
       { tamil: 'Poagalaam', script: 'போகலாம்', meaning: 'Let’s go', note: '' },
       { tamil: 'Saapaadu', script: 'சாப்பாடு', meaning: 'Food / meal', note: '“Saapatengala?” = have you eaten? (a real greeting here).' },
     ],
