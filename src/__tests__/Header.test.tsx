@@ -16,6 +16,7 @@ describe('Header menu', () => {
     expect(screen.getByRole('menuitem', { name: /talk like a local/i })).toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: /city map for geeks/i })).toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: /chennai metro map/i })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: /my passport/i })).toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: /install as app/i })).toBeInTheDocument();
   });
 

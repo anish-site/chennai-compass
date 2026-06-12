@@ -1,9 +1,22 @@
 import { useState } from 'react';
-import { Bus, ExternalLink, MapPin, Moon, Navigation, Share2, Sunrise, Sunset, Train, TrainFront } from 'lucide-react';
+import {
+  Bus,
+  ExternalLink,
+  MapPin,
+  Moon,
+  Navigation,
+  Share2,
+  Stamp,
+  Sunrise,
+  Sunset,
+  Train,
+  TrainFront,
+} from 'lucide-react';
 import type { BestTime, Place } from '../data/places';
 import { CATEGORY_META } from '../data/places';
 import { buildDirectionsUrl, buildGoogleSearchUrl } from '../utils/links';
 import { sharePlace } from '../utils/shareCard';
+import { formatDistance } from '../utils/geo';
 
 const TIME_ICONS: Record<BestTime, { icon: typeof Sunrise; label: string }> = {
   Morning: { icon: Sunrise, label: 'Best in the morning' },
@@ -17,7 +30,14 @@ function ticketNumber(id: string): number {
   return (hash % 90) + 10;
 }
 
-export default function PlaceCard({ place, index }: { place: Place; index: number }) {
+interface Props {
+  place: Place;
+  index: number;
+  visited?: boolean;
+  onToggleVisited?: (id: string) => void;
+}
+
+export default function PlaceCard({ place, index, visited = false, onToggleVisited }: Props) {
   const meta = CATEGORY_META[place.category];
   const [sharing, setSharing] = useState(false);
 
@@ -46,9 +66,14 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
     window.open(buildDirectionsUrl(place), '_blank', 'noopener,noreferrer');
   };
 
+  const toggleVisited = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onToggleVisited?.(place.id);
+  };
+
   return (
     <article
-      className="card"
+      className={visited ? 'card card-visited' : 'card'}
       style={
         {
           animationDelay: `${Math.min(index * 55, 440)}ms`,
@@ -63,6 +88,11 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
         if (e.key === 'Enter') openGoogle();
       }}
     >
+      {visited && (
+        <span className="visited-stamp" aria-hidden="true">
+          Visited ✓
+        </span>
+      )}
       <div className="ticket-top">
         <div className="stamp">
           <span className="stamp-emoji" aria-hidden="true">
@@ -82,6 +112,9 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
           <h3>{place.name}</h3>
           <p className="route">
             <MapPin size={12} aria-hidden="true" /> via {place.area}
+            {place.distanceKm !== undefined && (
+              <span className="distance"> · {formatDistance(place.distanceKm)}</span>
+            )}
           </p>
         </div>
       </div>
@@ -140,6 +173,17 @@ export default function PlaceCard({ place, index }: { place: Place; index: numbe
           Google it <ExternalLink size={13} aria-hidden="true" />
         </button>
         <div className="action-icons">
+          {onToggleVisited && (
+            <button
+              className={visited ? 'stamp-btn stamp-btn-active' : 'stamp-btn'}
+              onClick={toggleVisited}
+              aria-pressed={visited}
+              aria-label={`Stamp ${place.name} as visited`}
+              title={visited ? 'Unstamp' : 'Been here? Stamp it!'}
+            >
+              <Stamp size={16} />
+            </button>
+          )}
           <button
             className="share-btn"
             onClick={share}

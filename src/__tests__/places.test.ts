@@ -19,6 +19,17 @@ describe('places data', () => {
     }
   });
 
+  it('has coordinates in the greater Chennai region for every place', () => {
+    for (const place of places) {
+      expect(place.coords, `${place.id} is missing coords`).toBeDefined();
+      // Bounding box: greater Chennai + ECR day trips (Mahabalipuram) + Pulicat
+      expect(place.coords!.lat, place.id).toBeGreaterThan(12.5);
+      expect(place.coords!.lat, place.id).toBeLessThan(13.6);
+      expect(place.coords!.lng, place.id).toBeGreaterThan(80.0);
+      expect(place.coords!.lng, place.id).toBeLessThan(80.5);
+    }
+  });
+
   it('covers every category with at least one place', () => {
     for (const category of CATEGORIES) {
       expect(

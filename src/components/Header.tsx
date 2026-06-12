@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import { Compass, Info, Languages, Lightbulb, Map, Menu, Sparkles, TrainFront } from 'lucide-react';
+import { Compass, Info, Languages, Lightbulb, Map, Menu, Sparkles, Stamp, TrainFront } from 'lucide-react';
 import InstallButton from './InstallButton';
 import ThemeToggle from './ThemeToggle';
 import type { Theme } from '../hooks/useTheme';
 
-export type MenuModal = 'about' | 'tips' | 'cityMap' | 'metro' | 'surprise' | 'phrasebook';
+export type MenuModal =
+  | 'about'
+  | 'tips'
+  | 'cityMap'
+  | 'metro'
+  | 'surprise'
+  | 'phrasebook'
+  | 'passport';
 
 interface Props {
   onOpen: (modal: MenuModal) => void;
@@ -63,6 +70,9 @@ export default function Header({ onOpen, theme, onToggleTheme }: Props) {
             <div className="menu-dropdown" role="menu" aria-label="App menu">
               <button role="menuitem" className="menu-item" onClick={() => choose('surprise')}>
                 <Sparkles size={15} aria-hidden="true" /> Surprise me
+              </button>
+              <button role="menuitem" className="menu-item" onClick={() => choose('passport')}>
+                <Stamp size={15} aria-hidden="true" /> My passport
               </button>
               <button role="menuitem" className="menu-item" onClick={() => choose('about')}>
                 <Info size={15} aria-hidden="true" /> About this guide

@@ -19,6 +19,12 @@ hangouts I'd actually take my friends to. Built for my college peers.
 - **Dark mode** (a warm Chennai-night palette, not a black inversion) via the header toggle.
 - **Talk like a local** — a starter Tamil phrasebook (vanakkam, nandri, anna, evlo, eppo…) for
   newcomers, editable in `src/data/phrasebook.ts`.
+- **Near me** — one tap sorts every card by straight-line distance from you (with "under 3/5/10
+  km" filters). Pure Haversine math on bundled coordinates; no API, location never leaves the
+  device.
+- **Sunrise/sunset countdown** in the hero — computed locally for Chennai, no API.
+- **My passport** — stamp places you've visited; progress lives on-device, and a tiny backup
+  link (`#p=…`) restores or shares your stamps on any phone. No accounts, no backend.
 - The **☰ menu** has About, all the tips, a **city roads explainer**, the **Chennai Metro map**
   and the install-as-app option. Drop `maps/city-roads.jpg` / `maps/metro-map.jpg` into
   `public/` to show your own map images in those modals.

@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import TipsBar from '../components/TipsBar';
+import SunBadge from '../components/SunBadge';
 import Modal from '../components/Modal';
 import { tips } from '../data/tips';
 
@@ -23,6 +24,16 @@ describe('battery: timers are bounded and paused when appropriate', () => {
 
     unmount();
     expect(clearSpy).toHaveBeenCalledTimes(1); // no orphaned timer left ticking
+  });
+
+  it('SunBadge runs exactly one minute-tick interval, cleared on unmount', () => {
+    const setSpy = vi.spyOn(globalThis, 'setInterval');
+    const clearSpy = vi.spyOn(globalThis, 'clearInterval');
+
+    const { unmount } = render(<SunBadge />);
+    expect(setSpy).toHaveBeenCalledTimes(1);
+    unmount();
+    expect(clearSpy).toHaveBeenCalledTimes(1);
   });
 
   it('TipsBar does NOT spin a timer when the user prefers reduced motion', () => {

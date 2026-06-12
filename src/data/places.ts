@@ -36,6 +36,10 @@ export interface Place {
   googleQuery?: string;
   /** True for places recommended by friends via the Google Sheet. */
   community?: boolean;
+  /** Location, for "near me" distance sorting. */
+  coords?: { lat: number; lng: number };
+  /** Straight-line distance from the visitor, injected at runtime when location is on. */
+  distanceKm?: number;
 }
 
 export const CATEGORIES: Category[] = [
@@ -79,6 +83,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['sunrise', 'sundal', 'walks'],
     transit: { rail: 'Light House MRTS', bus: 'Kannagi Statue / Marina' },
+    coords: { lat: 13.05, lng: 80.2824 },
   },
   {
     id: 'bessie-beach',
@@ -94,6 +99,7 @@ export const places: Place[] = [
     tags: ['sunset', 'street food', 'chill'],
     googleQuery: 'Elliots Beach Besant Nagar Chennai',
     transit: { rail: 'Thiruvanmiyur MRTS', bus: 'Besant Nagar Terminus' },
+    coords: { lat: 13.0003, lng: 80.2718 },
   },
   {
     id: 'kasimedu',
@@ -108,6 +114,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['sunrise', 'boats', 'photography'],
     transit: { metro: 'Sir Theagaraya College', rail: 'Royapuram', bus: 'Kasimedu' },
+    coords: { lat: 13.1262, lng: 80.2931 },
   },
   {
     id: 'broken-bridge',
@@ -122,6 +129,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['golden hour', 'photography', 'offbeat'],
     transit: { rail: 'Indira Nagar MRTS', bus: 'Urur Kuppam' },
+    coords: { lat: 13.0095, lng: 80.2745 },
   },
   {
     id: 'kapaleeshwarar',
@@ -136,6 +144,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['gopuram', 'architecture', 'mylapore'],
     transit: { rail: 'Thirumayilai MRTS', bus: 'Mylapore Tank' },
+    coords: { lat: 13.0337, lng: 80.2698 },
   },
   {
     id: 'santhome',
@@ -150,6 +159,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['gothic', 'history', 'architecture'],
     transit: { rail: 'Thirumayilai MRTS', bus: 'Santhome Church' },
+    coords: { lat: 13.0336, lng: 80.2787 },
   },
   {
     id: 'fort-st-george',
@@ -164,6 +174,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['history', 'museum', 'colonial'],
     transit: { metro: 'High Court', rail: 'Chennai Fort', bus: 'Secretariat' },
+    coords: { lat: 13.0796, lng: 80.2875 },
   },
   {
     id: 'egmore-museum',
@@ -178,6 +189,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['bronzes', 'museum', 'architecture'],
     transit: { metro: 'Egmore', rail: 'Chennai Egmore', bus: 'Egmore Museum' },
+    coords: { lat: 13.071, lng: 80.2572 },
   },
   {
     id: 'dakshinachitra',
@@ -192,6 +204,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['culture', 'crafts', 'ecr'],
     transit: { bus: 'DakshinaChitra (ECR buses)' },
+    coords: { lat: 12.8704, lng: 80.2421 },
   },
   {
     id: 'cholamandal',
@@ -206,6 +219,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['art', 'quiet', 'galleries'],
     transit: { bus: 'Injambakkam (ECR buses)' },
+    coords: { lat: 12.9446, lng: 80.2563 },
   },
   {
     id: 'amethyst',
@@ -220,6 +234,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['garden', 'aesthetic', 'iced tea'],
     transit: { metro: 'Thousand Lights', bus: 'Royapettah Hospital' },
+    coords: { lat: 13.056, lng: 80.265 },
   },
   {
     id: 'writers-cafe',
@@ -234,6 +249,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['books', 'study spot', 'wifi'],
     transit: { metro: 'Thousand Lights', bus: 'Royapettah' },
+    coords: { lat: 13.0525, lng: 80.259 },
   },
   {
     id: 'ciclo',
@@ -248,6 +264,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['waffles', 'group tables', 'quirky'],
     transit: { rail: 'Kotturpuram MRTS', bus: 'Kotturpuram' },
+    coords: { lat: 13.0163, lng: 80.2425 },
   },
   {
     id: 'chamiers',
@@ -262,6 +279,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['breakfast', 'cheesecake', 'classic'],
     transit: { rail: 'Greenways Road MRTS', bus: 'Chamiers Road' },
+    coords: { lat: 13.0277, lng: 80.2546 },
   },
   {
     id: 'murugan-idli',
@@ -276,6 +294,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['idli', 'jigarthanda', 'budget'],
     transit: { rail: 'Mambalam', bus: 'Panagal Park' },
+    coords: { lat: 13.0424, lng: 80.2336 },
   },
   {
     id: 'ratna-cafe',
@@ -290,6 +309,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['sambar idli', 'legacy', 'budget'],
     transit: { rail: 'Chepauk MRTS', bus: 'Ice House' },
+    coords: { lat: 13.0565, lng: 80.2762 },
   },
   {
     id: 'buhari',
@@ -304,6 +324,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['chicken 65', 'biryani', 'late night'],
     transit: { metro: 'LIC', bus: 'Anna Salai (LIC)' },
+    coords: { lat: 13.0608, lng: 80.2647 },
   },
   {
     id: 'sowcarpet',
@@ -319,6 +340,7 @@ export const places: Place[] = [
     tags: ['chaat', 'kulfi', 'street food'],
     googleQuery: 'Sowcarpet street food Chennai',
     transit: { metro: 'High Court', rail: 'Chennai Park', bus: 'Mint' },
+    coords: { lat: 13.09, lng: 80.278 },
   },
   {
     id: 'jannal-kadai',
@@ -334,6 +356,7 @@ export const places: Place[] = [
     tags: ['bajji', 'hidden gem', 'mylapore'],
     googleQuery: 'Jannal Kadai Mylapore Chennai',
     transit: { rail: 'Thirumayilai MRTS', bus: 'Mylapore Tank' },
+    coords: { lat: 13.034, lng: 80.269 },
   },
   {
     id: 'pondy-bazaar',
@@ -348,6 +371,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['bargains', 'street shopping', 'snacks'],
     transit: { rail: 'Mambalam', bus: 'Panagal Park' },
+    coords: { lat: 13.0399, lng: 80.2349 },
   },
   {
     id: 'phoenix',
@@ -362,6 +386,7 @@ export const places: Place[] = [
     setting: 'Indoor',
     tags: ['mall', 'movies', 'arcade'],
     transit: { rail: 'Velachery MRTS', bus: 'Phoenix Mall' },
+    coords: { lat: 12.9941, lng: 80.2181 },
   },
   {
     id: 'semmozhi',
@@ -376,6 +401,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['garden', 'walks', 'budget'],
     transit: { metro: 'Teynampet', bus: 'Semmozhi Poonga' },
+    coords: { lat: 13.0531, lng: 80.2503 },
   },
   {
     id: 'theosophical',
@@ -390,6 +416,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['banyan tree', 'quiet', 'nature'],
     transit: { rail: 'Greenways Road MRTS', bus: 'Adyar Depot' },
+    coords: { lat: 13.011, lng: 80.259 },
   },
   {
     id: 'mahabalipuram',
@@ -404,6 +431,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['unesco', 'shore temple', 'road trip'],
     transit: { bus: 'Mamallapuram Bus Stand (588)' },
+    coords: { lat: 12.6208, lng: 80.1945 },
   },
   {
     id: 'muttukadu',
@@ -418,6 +446,7 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['boating', 'backwaters', 'ecr'],
     transit: { bus: 'Muttukadu Boat House (ECR buses)' },
+    coords: { lat: 12.8124, lng: 80.2418 },
   },
   {
     id: 'pulicat',
@@ -432,5 +461,6 @@ export const places: Place[] = [
     setting: 'Outdoor',
     tags: ['flamingos', 'birding', 'road trip'],
     transit: { rail: 'Ponneri (then share-auto)', bus: 'Pulicat (from Ponneri)' },
+    coords: { lat: 13.416, lng: 80.316 },
   },
 ];
