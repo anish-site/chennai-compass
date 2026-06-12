@@ -8,6 +8,7 @@ import AboutModal from './components/AboutModal';
 import TipsModal from './components/TipsModal';
 import CityMapModal from './components/CityMapModal';
 import MetroMapModal from './components/MetroMapModal';
+import PhrasebookModal from './components/PhrasebookModal';
 import SurpriseModal from './components/SurpriseModal';
 import { places } from './data/places';
 import { EMPTY_FILTERS, filterPlaces, uniqueAreas } from './utils/filterPlaces';
@@ -45,6 +46,7 @@ export default function App() {
       {activeModal === 'tips' && <TipsModal onClose={closeModal} />}
       {activeModal === 'cityMap' && <CityMapModal onClose={closeModal} />}
       {activeModal === 'metro' && <MetroMapModal onClose={closeModal} />}
+      {activeModal === 'phrasebook' && <PhrasebookModal onClose={closeModal} />}
       {activeModal === 'surprise' && <SurpriseModal places={places} onClose={closeModal} />}
     </>
   );

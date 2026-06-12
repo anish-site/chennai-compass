@@ -1144,6 +1144,69 @@ button {
   margin: 10px 0 0;
 }
 
+.phrase-group {
+  margin-top: 20px;
+}
+
+.phrase-group h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+
+.phrase-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.phrase {
+  padding: 11px 14px;
+  background: var(--tip-bg);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+}
+
+.phrase-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.phrase-tamil {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--sunset-deep);
+}
+
+.phrase-script {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.phrase-meaning {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.phrase-note {
+  margin: 3px 0 0;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
 .install-steps {
   margin: 0;
   padding-left: 18px;
