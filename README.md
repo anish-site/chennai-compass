@@ -48,6 +48,23 @@ array and the app picks it up automatically — filters, areas and all:
 }
 ```
 
+## SEO / AEO (all invisible)
+
+The build generates crawler-facing content automatically from the place data — nothing shows on
+the page:
+
+- **JSON-LD structured data** (schema.org `WebApplication` + an `ItemList` of every place, typed
+  as café/restaurant/attraction) injected into `index.html`
+- A **`<noscript>` summary** of all places, so AI crawlers that don't run JavaScript still see
+  real content
+- **`sitemap.xml`** and **`llms.txt`** emitted on build; **`robots.txt`** welcomes Google and AI
+  crawlers (GPTBot, ClaudeBot, PerplexityBot)
+- Canonical URL, Open Graph and Twitter-card tags for rich link previews
+
+Everything derives from `src/data/places.ts` via `src/utils/seo.ts` — add a place and the SEO
+updates itself. If the domain ever changes, update `SITE.url` in `src/utils/seo.ts` (and the
+canonical/OG tags in `index.html`).
+
 ## Develop
 
 ```bash
