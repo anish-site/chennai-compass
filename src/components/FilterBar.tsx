@@ -93,7 +93,13 @@ export default function FilterBar({ filters, setFilters, areas, resultCount }: P
             key={cat}
             className={`chip ${filters.categories.includes(cat) ? 'chip-active' : ''}`}
             aria-pressed={filters.categories.includes(cat)}
-            onClick={() => setFilters((f) => ({ ...f, categories: toggle(f.categories, cat) }))}
+            onClick={() =>
+              setFilters((f) => ({
+                ...f,
+                // Single-select: pick this category only, or clear it back to All.
+                categories: f.categories[0] === cat ? [] : [cat],
+              }))
+            }
           >
             {cat}
           </button>
