@@ -7,7 +7,7 @@ import { tips } from '../data/tips';
 
 describe('Header menu', () => {
   it('keeps everything tucked away until the menu is opened', async () => {
-    render(<Header onOpen={() => {}} />);
+    render(<Header onOpen={() => {}} theme="light" onToggleTheme={() => {}} />);
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
 
     await userEvent.click(screen.getByRole('button', { name: /menu/i }));
@@ -20,7 +20,7 @@ describe('Header menu', () => {
 
   it('reports the chosen modal and closes the menu', async () => {
     const onOpen = vi.fn();
-    render(<Header onOpen={onOpen} />);
+    render(<Header onOpen={onOpen} theme="light" onToggleTheme={() => {}} />);
 
     await userEvent.click(screen.getByRole('button', { name: /menu/i }));
     await userEvent.click(screen.getByRole('menuitem', { name: /chennai metro map/i }));
@@ -33,7 +33,7 @@ describe('Header menu', () => {
   });
 
   it('closes on Escape', async () => {
-    render(<Header onOpen={() => {}} />);
+    render(<Header onOpen={() => {}} theme="light" onToggleTheme={() => {}} />);
     await userEvent.click(screen.getByRole('button', { name: /menu/i }));
     await userEvent.keyboard('{Escape}');
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();

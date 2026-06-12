@@ -14,6 +14,9 @@ hangouts I'd actually take my friends to. Built for my college peers.
 - Tap the **➤ arrow** → opens **Google Maps directions** straight away.
 - Each postcard lists the **nearest Metro / suburban–MRTS station and bus stop**.
 - A **Tips for Chennai** carousel rotates survival tips every 5 seconds (swipe or use the arrows).
+- **Share** any postcard as a branded image (Instagram, WhatsApp…) via the share button.
+- **Surprise me** picks a random spot with a little magic — from the hero button or the menu.
+- **Dark mode** (a warm Chennai-night palette, not a black inversion) via the header toggle.
 - The **☰ menu** has About, all the tips, a **city roads explainer**, the **Chennai Metro map**
   and the install-as-app option. Drop `maps/city-roads.jpg` / `maps/metro-map.jpg` into
   `public/` to show your own map images in those modals.

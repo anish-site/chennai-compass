@@ -1,4 +1,6 @@
-export default function Hero() {
+import { Sparkles } from 'lucide-react';
+
+export default function Hero({ onSurprise }: { onSurprise: () => void }) {
   return (
     <section className="hero">
       <div className="hero-inner">
@@ -10,6 +12,9 @@ export default function Hero() {
           The beaches, cafés, bajji stalls and hideouts I'd actually take you to — curated by a
           local, for my people.
         </p>
+        <button className="hero-surprise" onClick={onSurprise}>
+          <Sparkles size={17} aria-hidden="true" /> Surprise me
+        </button>
       </div>
       <div className="hero-wave" aria-hidden="true">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none">

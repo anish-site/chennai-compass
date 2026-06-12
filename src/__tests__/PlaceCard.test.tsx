@@ -3,6 +3,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PlaceCard from '../components/PlaceCard';
 import type { Place } from '../data/places';
+import { sharePlace } from '../utils/shareCard';
+
+vi.mock('../utils/shareCard', () => ({
+  sharePlace: vi.fn().mockResolvedValue('shared'),
+}));
 
 const place: Place = {
   id: 'bessie',
@@ -91,6 +96,13 @@ describe('PlaceCard (postcard)', () => {
       '_blank',
       'noopener,noreferrer'
     );
+  });
+
+  it('shares the postcard from the share button without opening Google', async () => {
+    render(<PlaceCard place={place} index={0} />);
+    await userEvent.click(screen.getByRole('button', { name: /share bessie beach/i }));
+    expect(sharePlace).toHaveBeenCalledWith(place);
+    expect(window.open).not.toHaveBeenCalled();
   });
 
   it('opens Maps directions from the directions button without triggering the card click', async () => {
