@@ -63,7 +63,10 @@ The whole pipeline is built — it activates the moment a sheet URL is configure
    ₹, ₹₹, ₹₹₹), Vibes (checkboxes), Best time (checkboxes: Morning, Evening, Night), Setting
    (dropdown: Indoor, Outdoor), Tags*.
 2. In the form's Responses tab click **Link to Sheets**, then add an **Approved** checkbox
-   column in the sheet. Only rows you tick ever appear.
+   column in the sheet. Only rows you tick ever appear. Coordinates are **auto-geocoded via
+   OpenStreetMap on each deploy**, so approved places join "near me" sorting after the next
+   deploy-hook rebuild (until then they show without a distance). If a pin lands wrong, add
+   optional Latitude/Longitude columns to override it.
 3. **File → Share → Publish to web → CSV**, copy the URL, and paste it into `SHEET_CSV_URL`
    in [`src/data/config.ts`](src/data/config.ts). Push once.
 

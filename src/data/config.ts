@@ -9,6 +9,10 @@
  * Expected columns (header row, order doesn't matter, extra columns fine):
  *   Name | Area | Category | Description | Price | Vibes | Best time |
  *   Setting | Tags | Approved
+ * - Coordinates are found automatically: each deploy geocodes new places
+ *   via OpenStreetMap so they join "near me" sorting. If a pin ever lands
+ *   wrong, add optional Latitude/Longitude columns — values there override
+ *   the auto lookup.
  * - Category: one of the app's categories (Cafés, Beaches, Food, Heritage,
  *   Shopping, Hangouts, Day Trips)
  * - Price: Free, ₹, ₹₹ or ₹₹₹

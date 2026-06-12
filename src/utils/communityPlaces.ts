@@ -85,6 +85,15 @@ function isApproved(cell: string): boolean {
   return ['true', 'yes', 'y', '1'].includes(cell.trim().toLowerCase());
 }
 
+/** Optional sheet coords (paste from Google Maps while approving a row). */
+function parseCoords(latCell: string, lngCell: string): Place['coords'] {
+  const lat = Number.parseFloat(latCell);
+  const lng = Number.parseFloat(lngCell);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return undefined;
+  if (Math.abs(lat) > 90 || Math.abs(lng) > 180) return undefined;
+  return { lat, lng };
+}
+
 /**
  * Maps published-sheet rows (header + data) to Places. Only approved rows
  * with a valid name/area/description/category make it through; everything
@@ -122,9 +131,22 @@ export function rowsToPlaces(rows: string[][]): Place[] {
       setting: oneOf<Setting>(SETTINGS, cell(row, 'setting')) ?? 'Outdoor',
       tags: splitList(cell(row, 'tag')),
       community: true,
+      coords: parseCoords(cell(row, 'lat'), cell(row, 'lon')),
     });
   }
   return places;
+}
+
+/**
+ * Combines the build-time snapshot (which has geocoded coords baked in)
+ * with the live sheet (which may have newer rows). Live rows win on
+ * content; rows the build already geocoded inherit their coords. If the
+ * live fetch failed, the snapshot still works offline-ish.
+ */
+export function mergeCommunity(baked: Place[], live: Place[]): Place[] {
+  if (live.length === 0) return baked;
+  const bakedById = new Map(baked.map((p) => [p.id, p]));
+  return live.map((p) => (p.coords ? p : { ...p, coords: bakedById.get(p.id)?.coords }));
 }
 
 /**

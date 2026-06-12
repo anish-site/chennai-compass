@@ -4,7 +4,7 @@ import { fetchCommunityPlaces, parseCsv, rowsToPlaces } from '../utils/community
 import { useCommunityPlaces } from '../hooks/useCommunityPlaces';
 
 const HEADER =
-  'Timestamp,Name,Area,Category,Description,Price,Vibes,Best time,Setting,Tags,Approved';
+  'Timestamp,Name,Area,Category,Description,Price,Vibes,Best time,Setting,Tags,Latitude,Longitude,Approved';
 
 const row = (overrides: Partial<Record<string, string>> = {}) => {
   const r = {
@@ -18,6 +18,8 @@ const row = (overrides: Partial<Record<string, string>> = {}) => {
     'Best time': 'Morning, Evening',
     Setting: 'Outdoor',
     Tags: 'surfing, quiet',
+    Latitude: '',
+    Longitude: '',
     Approved: 'TRUE',
     ...overrides,
   };
@@ -79,6 +81,18 @@ describe('rowsToPlaces', () => {
     expect(place.vibes).toEqual(['Group hangout']);
     expect(place.bestTime).toEqual(['Evening']);
     expect(place.setting).toBe('Outdoor');
+  });
+
+  it('parses optional coordinates so community places work with near-me', () => {
+    const [place] = parse(row({ Latitude: '12.7886', Longitude: '80.2541' }));
+    expect(place.coords).toEqual({ lat: 12.7886, lng: 80.2541 });
+  });
+
+  it('leaves coords undefined for missing, garbled or impossible values', () => {
+    expect(parse(row())[0].coords).toBeUndefined();
+    expect(parse(row({ Latitude: 'near the beach', Longitude: '80.2' }))[0].coords).toBeUndefined();
+    expect(parse(row({ Latitude: '12.7', Longitude: '' }))[0].coords).toBeUndefined();
+    expect(parse(row({ Latitude: '99', Longitude: '80.2' }))[0].coords).toBeUndefined();
   });
 
   it('returns nothing for an empty sheet', () => {

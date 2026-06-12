@@ -1280,6 +1280,11 @@ button {
   color: var(--ink-soft);
 }
 
+.osm-credit {
+  font-size: 0.72rem !important;
+  opacity: 0.75;
+}
+
 .passport-progress {
   margin: 0 0 8px;
   font-size: 0.95rem;
