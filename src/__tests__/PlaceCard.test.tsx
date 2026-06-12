@@ -59,6 +59,14 @@ describe('PlaceCard (postcard)', () => {
     expect(screen.queryByLabelText('Nearest public transport')).not.toBeInTheDocument();
   });
 
+  it("marks community places with a friend's pick tag", () => {
+    const { rerender } = render(<PlaceCard place={{ ...place, community: true }} index={0} />);
+    expect(screen.getByText(/friend's pick/i)).toBeInTheDocument();
+
+    rerender(<PlaceCard place={place} index={0} />);
+    expect(screen.queryByText(/friend's pick/i)).not.toBeInTheDocument();
+  });
+
   it('shows an icon per best-time slot', () => {
     render(<PlaceCard place={{ ...place, bestTime: ['Morning', 'Night'] }} index={0} />);
     expect(screen.getByLabelText('Best in the morning')).toBeInTheDocument();

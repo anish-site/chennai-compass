@@ -34,6 +34,8 @@ export interface Place {
   };
   /** Override for the Google search query when the name alone is ambiguous. */
   googleQuery?: string;
+  /** True for places recommended by friends via the Google Sheet. */
+  community?: boolean;
 }
 
 export const CATEGORIES: Category[] = [

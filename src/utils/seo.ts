@@ -42,8 +42,8 @@ function placeNode(place: Place) {
   };
 }
 
-/** schema.org JSON-LD graph: the site + every curated place. */
-export function buildJsonLd(): string {
+/** schema.org JSON-LD graph: the site + every place (curated + community). */
+export function buildJsonLd(allPlaces: Place[] = places): string {
   const graph = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -61,8 +61,8 @@ export function buildJsonLd(): string {
       {
         '@type': 'ItemList',
         name: 'Curated places to visit in Chennai',
-        numberOfItems: places.length,
-        itemListElement: places.map((place, i) => ({
+        numberOfItems: allPlaces.length,
+        itemListElement: allPlaces.map((place, i) => ({
           '@type': 'ListItem',
           position: i + 1,
           item: placeNode(place),
@@ -78,8 +78,8 @@ export function buildJsonLd(): string {
  * Real content for agents that don't run JavaScript (most AI crawlers,
  * text browsers). Rendered inside <noscript>, so JS users never see it.
  */
-export function buildNoscriptHtml(): string {
-  const items = places
+export function buildNoscriptHtml(allPlaces: Place[] = places): string {
+  const items = allPlaces
     .map(
       (p) =>
         `<li><strong>${escapeHtml(p.name)}</strong> (${escapeHtml(p.category)} · ${escapeHtml(
@@ -106,9 +106,9 @@ export function buildSitemap(): string {
 }
 
 /** llms.txt — a plain-markdown site summary for AI crawlers. */
-export function buildLlmsTxt(): string {
+export function buildLlmsTxt(allPlaces: Place[] = places): string {
   const byCategory = new Map<Category, Place[]>();
-  for (const place of places) {
+  for (const place of allPlaces) {
     byCategory.set(place.category, [...(byCategory.get(place.category) ?? []), place]);
   }
   const sections = [...byCategory.entries()].map(([category, group]) => {
