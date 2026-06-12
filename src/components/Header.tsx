@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Compass, Info, Lightbulb, Map, Menu, Sparkles, TrainFront } from 'lucide-react';
+import { Compass, Info, Languages, Lightbulb, Map, Menu, Sparkles, TrainFront } from 'lucide-react';
 import InstallButton from './InstallButton';
 import ThemeToggle from './ThemeToggle';
 import type { Theme } from '../hooks/useTheme';
 
-export type MenuModal = 'about' | 'tips' | 'cityMap' | 'metro' | 'surprise';
+export type MenuModal = 'about' | 'tips' | 'cityMap' | 'metro' | 'surprise' | 'phrasebook';
 
 interface Props {
   onOpen: (modal: MenuModal) => void;
@@ -69,6 +69,9 @@ export default function Header({ onOpen, theme, onToggleTheme }: Props) {
               </button>
               <button role="menuitem" className="menu-item" onClick={() => choose('tips')}>
                 <Lightbulb size={15} aria-hidden="true" /> Tips for Chennai
+              </button>
+              <button role="menuitem" className="menu-item" onClick={() => choose('phrasebook')}>
+                <Languages size={15} aria-hidden="true" /> Talk like a local
               </button>
               <button role="menuitem" className="menu-item" onClick={() => choose('cityMap')}>
                 <Map size={15} aria-hidden="true" /> City map for geeks

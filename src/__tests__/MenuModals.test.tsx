@@ -17,6 +17,16 @@ describe('menu modals', () => {
     expect(dialog).toHaveTextContent(/filter coffee/i);
   });
 
+  it('opens the phrasebook modal with key newcomer words', async () => {
+    render(<App />);
+    await openMenuItem(/talk like a local/i);
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveTextContent(/talk like a local/i);
+    expect(dialog).toHaveTextContent('Nandri');
+    expect(dialog).toHaveTextContent('Anna');
+    expect(dialog).toHaveTextContent('Evlo?');
+  });
+
   it('opens the city map modal with the main roads', async () => {
     render(<App />);
     await openMenuItem(/city map for geeks/i);
