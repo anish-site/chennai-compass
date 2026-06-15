@@ -13,6 +13,8 @@ export interface Filters {
   settings: Setting[];
   /** Max straight-line distance (km) when "near me" is active. */
   maxKm: number | null;
+  /** Show only the curator's top picks. */
+  topOnly: boolean;
 }
 
 export const EMPTY_FILTERS: Filters = {
@@ -24,6 +26,7 @@ export const EMPTY_FILTERS: Filters = {
   areas: [],
   settings: [],
   maxKm: null,
+  topOnly: false,
 };
 
 function matchesPrice(place: Place, prices: PriceFilter[]): boolean {
@@ -57,7 +60,8 @@ export function filterPlaces(places: Place[], filters: Filters): Place[] {
       (filters.areas.length === 0 || filters.areas.includes(place.area)) &&
       (filters.settings.length === 0 || filters.settings.includes(place.setting)) &&
       (filters.maxKm === null ||
-        (place.distanceKm !== undefined && place.distanceKm <= filters.maxKm))
+        (place.distanceKm !== undefined && place.distanceKm <= filters.maxKm)) &&
+      (!filters.topOnly || place.topPick === true)
   );
 }
 

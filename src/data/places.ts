@@ -36,6 +36,8 @@ export interface Place {
   googleQuery?: string;
   /** True for places recommended by friends via the Google Sheet. */
   community?: boolean;
+  /** My personal top pick for its category — surfaced by the "Top picks" filter. */
+  topPick?: boolean;
   /** Location, for "near me" distance sorting. */
   coords?: { lat: number; lng: number };
   /** Straight-line distance from the visitor, injected at runtime when location is on. */
@@ -72,6 +74,7 @@ export const CATEGORY_META: Record<Category, { emoji: string; accent: string }> 
 export const places: Place[] = [
   {
     id: 'marina-beach',
+    topPick: true,
     name: 'Marina Beach',
     category: 'Beaches',
     area: 'Marina',
@@ -118,6 +121,7 @@ export const places: Place[] = [
   },
   {
     id: 'broken-bridge',
+    topPick: true,
     name: 'Broken Bridge',
     category: 'Hangouts',
     area: 'Adyar',
@@ -133,6 +137,7 @@ export const places: Place[] = [
   },
   {
     id: 'kapaleeshwarar',
+    topPick: true,
     name: 'Kapaleeshwarar Temple',
     category: 'Heritage',
     area: 'Mylapore',
@@ -223,6 +228,7 @@ export const places: Place[] = [
   },
   {
     id: 'amethyst',
+    topPick: true,
     name: 'Amethyst Café',
     category: 'Cafés',
     area: 'Royapettah',
@@ -283,6 +289,7 @@ export const places: Place[] = [
   },
   {
     id: 'murugan-idli',
+    topPick: true,
     name: 'Murugan Idli Shop',
     category: 'Food',
     area: 'T. Nagar',
@@ -360,6 +367,7 @@ export const places: Place[] = [
   },
   {
     id: 'pondy-bazaar',
+    topPick: true,
     name: 'Pondy Bazaar',
     category: 'Shopping',
     area: 'T. Nagar',
@@ -420,6 +428,7 @@ export const places: Place[] = [
   },
   {
     id: 'mahabalipuram',
+    topPick: true,
     name: 'Mahabalipuram',
     category: 'Day Trips',
     area: 'ECR · 55 km',

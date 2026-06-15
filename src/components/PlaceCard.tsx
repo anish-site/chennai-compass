@@ -6,6 +6,7 @@ import {
   Moon,
   Navigation,
   Share2,
+  Star,
   Stamp,
   Sunrise,
   Sunset,
@@ -109,7 +110,17 @@ export default function PlaceCard({ place, index, visited = false, onToggleVisit
               600·001
             </span>
           </div>
-          <h3>{place.name}</h3>
+          <h3>
+            {place.topPick && (
+              <Star
+                size={15}
+                className="top-star"
+                fill="currentColor"
+                aria-label="My top pick"
+              />
+            )}
+            {place.name}
+          </h3>
           <p className="route">
             <MapPin size={12} aria-hidden="true" /> via {place.area}
             {place.distanceKm !== undefined && (

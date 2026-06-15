@@ -555,6 +555,44 @@ button {
   color: var(--white);
 }
 
+.chip-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #b8860b;
+  border-color: #e8c14a;
+}
+
+.chip-top:hover {
+  border-color: var(--gold);
+  color: #9a6f00;
+}
+
+.chip-top-active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #3d2e00;
+}
+
+.chip-top-active:hover {
+  background: #f0a818;
+  color: #3d2e00;
+}
+
+[data-theme='dark'] .chip-top {
+  color: var(--gold);
+}
+
+[data-theme='dark'] .chip-top-active {
+  color: #2a2200;
+}
+
+.top-star {
+  color: var(--gold);
+  margin-right: 5px;
+  vertical-align: -2px;
+}
+
 .chip-active:hover {
   background: var(--sunset-deep);
   color: var(--white);

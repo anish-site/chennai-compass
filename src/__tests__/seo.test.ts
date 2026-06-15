@@ -30,6 +30,19 @@ describe('JSON-LD structured data', () => {
     expect(typeOf('Marina Beach')).toBe('TouristAttraction');
   });
 
+  it("tags top picks with an award for answer engines", () => {
+    const awarded = list.itemListElement.filter(
+      (e: { item: { award?: string } }) => e.item.award
+    );
+    expect(awarded.length).toBeGreaterThan(0);
+    expect(awarded[0].item.award).toBe("Local's top pick");
+    // non-top-picks carry no award
+    const santhome = list.itemListElement.find(
+      (e: { item: { name: string } }) => e.item.name === 'San Thome Basilica'
+    );
+    expect(santhome.item.award).toBeUndefined();
+  });
+
   it('marks every address as Chennai, Tamil Nadu, IN', () => {
     for (const entry of list.itemListElement) {
       expect(entry.item.address.addressLocality).toBe('Chennai');

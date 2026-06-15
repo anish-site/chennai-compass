@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LocateFixed, Search, SlidersHorizontal, X } from 'lucide-react';
+import { LocateFixed, Search, SlidersHorizontal, Star, X } from 'lucide-react';
 import {
   BEST_TIMES,
   CATEGORIES,
@@ -47,7 +47,10 @@ export default function FilterBar({ filters, setFilters, areas, resultCount, nea
   const [panelOpen, setPanelOpen] = useState(false);
   const panelCount = countPanelFilters(filters);
   const anyActive =
-    panelCount > 0 || filters.categories.length > 0 || filters.search.trim() !== '';
+    panelCount > 0 ||
+    filters.categories.length > 0 ||
+    filters.topOnly ||
+    filters.search.trim() !== '';
 
   const chipRow = <T extends string>(
     label: string,
@@ -106,6 +109,15 @@ export default function FilterBar({ filters, setFilters, areas, resultCount, nea
       </div>
 
       <div className="chip-row category-row" role="group" aria-label="Category">
+        <button
+          className={`chip chip-top ${filters.topOnly ? 'chip-top-active' : ''}`}
+          aria-pressed={filters.topOnly}
+          title="Show only my top picks"
+          onClick={() => setFilters((f) => ({ ...f, topOnly: !f.topOnly }))}
+        >
+          <Star size={13} aria-hidden="true" fill={filters.topOnly ? 'currentColor' : 'none'} />
+          Top picks
+        </button>
         <button
           className={`chip ${filters.categories.length === 0 ? 'chip-active' : ''}`}
           aria-pressed={filters.categories.length === 0}

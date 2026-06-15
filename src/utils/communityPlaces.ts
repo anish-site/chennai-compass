@@ -131,6 +131,7 @@ export function rowsToPlaces(rows: string[][]): Place[] {
       setting: oneOf<Setting>(SETTINGS, cell(row, 'setting')) ?? 'Outdoor',
       tags: splitList(cell(row, 'tag')),
       community: true,
+      topPick: isApproved(cell(row, 'top')),
       coords: parseCoords(cell(row, 'lat'), cell(row, 'lon')),
     });
   }

@@ -30,6 +30,13 @@ describe('places data', () => {
     }
   });
 
+  it('has at least one top pick, and every top pick is a real place', () => {
+    const topPicks = places.filter((p) => p.topPick);
+    expect(topPicks.length).toBeGreaterThan(0);
+    // top picks should spread across categories, not all in one
+    expect(new Set(topPicks.map((p) => p.category)).size).toBeGreaterThan(1);
+  });
+
   it('covers every category with at least one place', () => {
     for (const category of CATEGORIES) {
       expect(
