@@ -93,6 +93,18 @@ describe('filterPlaces', () => {
     expect(filterPlaces(all, filters({ prices: ['Free'] }))).toEqual([beach, temple]);
   });
 
+  it('shows only top picks when topOnly is set, and ANDs with category', () => {
+    const picks = [
+      make({ id: 'p1', category: 'Cafés', topPick: true }),
+      make({ id: 'p2', category: 'Cafés' }),
+      make({ id: 'p3', category: 'Beaches', topPick: true }),
+    ];
+    expect(filterPlaces(picks, filters({ topOnly: true })).map((p) => p.id)).toEqual(['p1', 'p3']);
+    expect(
+      filterPlaces(picks, filters({ topOnly: true, categories: ['Cafés'] })).map((p) => p.id)
+    ).toEqual(['p1']);
+  });
+
   it("treats 'Paid' as any non-free price", () => {
     expect(filterPlaces(all, filters({ prices: ['Paid'] }))).toEqual([cafe, mall]);
   });

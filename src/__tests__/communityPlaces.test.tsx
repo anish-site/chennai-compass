@@ -4,7 +4,7 @@ import { fetchCommunityPlaces, parseCsv, rowsToPlaces } from '../utils/community
 import { useCommunityPlaces } from '../hooks/useCommunityPlaces';
 
 const HEADER =
-  'Timestamp,Name,Area,Category,Description,Price,Vibes,Best time,Setting,Tags,Latitude,Longitude,Approved';
+  'Timestamp,Name,Area,Category,Description,Price,Vibes,Best time,Setting,Tags,Latitude,Longitude,Top pick,Approved';
 
 const row = (overrides: Partial<Record<string, string>> = {}) => {
   const r = {
@@ -20,6 +20,7 @@ const row = (overrides: Partial<Record<string, string>> = {}) => {
     Tags: 'surfing, quiet',
     Latitude: '',
     Longitude: '',
+    'Top pick': '',
     Approved: 'TRUE',
     ...overrides,
   };
@@ -81,6 +82,12 @@ describe('rowsToPlaces', () => {
     expect(place.vibes).toEqual(['Group hangout']);
     expect(place.bestTime).toEqual(['Evening']);
     expect(place.setting).toBe('Outdoor');
+  });
+
+  it('marks a row as a top pick from the Top pick column', () => {
+    expect(parse(row())[0].topPick).toBe(false);
+    expect(parse(row({ 'Top pick': 'TRUE' }))[0].topPick).toBe(true);
+    expect(parse(row({ 'Top pick': 'yes' }))[0].topPick).toBe(true);
   });
 
   it('parses optional coordinates so community places work with near-me', () => {

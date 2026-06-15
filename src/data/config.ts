@@ -13,6 +13,8 @@
  *   via OpenStreetMap so they join "near me" sorting. If a pin ever lands
  *   wrong, add optional Latitude/Longitude columns — values there override
  *   the auto lookup.
+ * - Add an optional "Top pick" column (TRUE/yes) to flag your standout
+ *   picks — they get a gold star and show under the "Top picks" filter.
  * - Category: one of the app's categories (Cafés, Beaches, Food, Heritage,
  *   Shopping, Hangouts, Day Trips)
  * - Price: Free, ₹, ₹₹ or ₹₹₹

@@ -19,6 +19,9 @@ hangouts I'd actually take my friends to. Built for my college peers.
 - **Dark mode** (a warm Chennai-night palette, not a black inversion) via the header toggle.
 - **Talk like a local** — a starter Tamil phrasebook (vanakkam, nandri, anna, evlo, eppo…) for
   newcomers, editable in `src/data/phrasebook.ts`.
+- **Top picks** — a gold-star toggle filters to your standout picks; combine it with a category
+  for "my top cafés". Set `topPick: true` in `src/data/places.ts` (or a "Top pick" column in the
+  sheet).
 - **Near me** — one tap sorts every card by straight-line distance from you (with "under 3/5/10
   km" filters). Pure Haversine math on bundled coordinates; no API, location never leaves the
   device.

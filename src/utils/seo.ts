@@ -32,6 +32,7 @@ function placeNode(place: Place) {
     description: place.description,
     keywords: place.tags.join(', '),
     isAccessibleForFree: place.price === 'Free',
+    ...(place.topPick ? { award: "Local's top pick" } : {}),
     address: {
       '@type': 'PostalAddress',
       streetAddress: place.area,
@@ -114,7 +115,7 @@ export function buildLlmsTxt(allPlaces: Place[] = places): string {
   const sections = [...byCategory.entries()].map(([category, group]) => {
     const lines = group.map(
       (p) =>
-        `- ${p.name} (${p.area}, Chennai; ${p.price === 'Free' ? 'free' : `price level ${p.price}`}; best ${p.bestTime.join('/').toLowerCase()}): ${p.description}`
+        `- ${p.topPick ? '★ Top pick — ' : ''}${p.name} (${p.area}, Chennai; ${p.price === 'Free' ? 'free' : `price level ${p.price}`}; best ${p.bestTime.join('/').toLowerCase()}): ${p.description}`
     );
     return `## ${category}\n\n${lines.join('\n')}`;
   });
