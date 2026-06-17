@@ -1,16 +1,12 @@
-import type { BestTime, Category, Place, Price, Setting, Vibe } from '../data/places';
-
-/** 'Paid' matches any place whose price is not 'Free'. */
-export type PriceFilter = Price | 'Paid';
+import type { BestTime, Category, Place } from '../data/places';
 
 export interface Filters {
   search: string;
   categories: Category[];
-  prices: PriceFilter[];
-  vibes: Vibe[];
+  /** Category-specific tags (e.g. Cafés → rustic, luxury). */
+  tags: string[];
   bestTimes: BestTime[];
   areas: string[];
-  settings: Setting[];
   /** Max straight-line distance (km) when "near me" is active. */
   maxKm: number | null;
   /** Show only the curator's top picks. */
@@ -20,19 +16,12 @@ export interface Filters {
 export const EMPTY_FILTERS: Filters = {
   search: '',
   categories: [],
-  prices: [],
-  vibes: [],
+  tags: [],
   bestTimes: [],
   areas: [],
-  settings: [],
   maxKm: null,
   topOnly: false,
 };
-
-function matchesPrice(place: Place, prices: PriceFilter[]): boolean {
-  if (prices.length === 0) return true;
-  return prices.some((p) => (p === 'Paid' ? place.price !== 'Free' : place.price === p));
-}
 
 function matchesSearch(place: Place, search: string): boolean {
   const q = search.trim().toLowerCase();
@@ -53,12 +42,10 @@ export function filterPlaces(places: Place[], filters: Filters): Place[] {
     (place) =>
       matchesSearch(place, filters.search) &&
       (filters.categories.length === 0 || filters.categories.includes(place.category)) &&
-      matchesPrice(place, filters.prices) &&
-      (filters.vibes.length === 0 || place.vibes.some((v) => filters.vibes.includes(v))) &&
+      (filters.tags.length === 0 || place.tags.some((t) => filters.tags.includes(t))) &&
       (filters.bestTimes.length === 0 ||
         place.bestTime.some((t) => filters.bestTimes.includes(t))) &&
       (filters.areas.length === 0 || filters.areas.includes(place.area)) &&
-      (filters.settings.length === 0 || filters.settings.includes(place.setting)) &&
       (filters.maxKm === null ||
         (place.distanceKm !== undefined && place.distanceKm <= filters.maxKm)) &&
       (!filters.topOnly || place.topPick === true)
@@ -68,11 +55,9 @@ export function filterPlaces(places: Place[], filters: Filters): Place[] {
 /** Number of active selections in the advanced panel (excludes search & categories). */
 export function countPanelFilters(filters: Filters): number {
   return (
-    filters.prices.length +
-    filters.vibes.length +
+    filters.tags.length +
     filters.bestTimes.length +
     filters.areas.length +
-    filters.settings.length +
     (filters.maxKm !== null ? 1 : 0)
   );
 }

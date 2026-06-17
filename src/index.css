@@ -610,6 +610,21 @@ button {
   animation: rise 0.25s ease both;
 }
 
+.filter-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.community-pin {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+
 .filter-group-label {
   display: block;
   margin-bottom: 6px;

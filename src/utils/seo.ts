@@ -113,10 +113,13 @@ export function buildLlmsTxt(allPlaces: Place[] = places): string {
     byCategory.set(place.category, [...(byCategory.get(place.category) ?? []), place]);
   }
   const sections = [...byCategory.entries()].map(([category, group]) => {
-    const lines = group.map(
-      (p) =>
-        `- ${p.topPick ? '★ Top pick — ' : ''}${p.name} (${p.area}, Chennai; ${p.price === 'Free' ? 'free' : `price level ${p.price}`}; best ${p.bestTime.join('/').toLowerCase()}): ${p.description}`
-    );
+    const lines = group.map((p) => {
+      const price = p.price === 'Free' ? 'free' : p.price ? `price level ${p.price}` : '';
+      const meta = [p.area + ', Chennai', price, `best ${p.bestTime.join('/').toLowerCase()}`]
+        .filter(Boolean)
+        .join('; ');
+      return `- ${p.topPick ? '★ Top pick — ' : ''}${p.name} (${meta}): ${p.description}`;
+    });
     return `## ${category}\n\n${lines.join('\n')}`;
   });
   const tipLines = tips.map((t) => `- ${t.text}`);

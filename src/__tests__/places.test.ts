@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CATEGORIES, places } from '../data/places';
+import { CATEGORIES, CATEGORY_TAGS, places } from '../data/places';
 
 describe('places data', () => {
   it('has unique ids', () => {
@@ -12,7 +12,6 @@ describe('places data', () => {
       expect(place.name, place.id).not.toBe('');
       expect(place.area, place.id).not.toBe('');
       expect(place.description, place.id).not.toBe('');
-      expect(place.vibes.length, place.id).toBeGreaterThan(0);
       expect(place.bestTime.length, place.id).toBeGreaterThan(0);
       expect(place.tags.length, place.id).toBeGreaterThan(0);
       expect(CATEGORIES).toContain(place.category);
@@ -35,6 +34,14 @@ describe('places data', () => {
     expect(topPicks.length).toBeGreaterThan(0);
     // top picks should spread across categories, not all in one
     expect(new Set(topPicks.map((p) => p.category)).size).toBeGreaterThan(1);
+  });
+
+  it('every place carries at least one tag from its category vocabulary', () => {
+    for (const place of places) {
+      const vocab = CATEGORY_TAGS[place.category];
+      const hasVocabTag = place.tags.some((t) => vocab.includes(t));
+      expect(hasVocabTag, `${place.id} has no ${place.category} vocab tag`).toBe(true);
+    }
   });
 
   it('covers every category with at least one place', () => {

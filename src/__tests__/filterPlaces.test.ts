@@ -89,10 +89,6 @@ describe('filterPlaces', () => {
     ]);
   });
 
-  it('filters free places', () => {
-    expect(filterPlaces(all, filters({ prices: ['Free'] }))).toEqual([beach, temple]);
-  });
-
   it('shows only top picks when topOnly is set, and ANDs with category', () => {
     const picks = [
       make({ id: 'p1', category: 'Cafés', topPick: true }),
@@ -105,16 +101,9 @@ describe('filterPlaces', () => {
     ).toEqual(['p1']);
   });
 
-  it("treats 'Paid' as any non-free price", () => {
-    expect(filterPlaces(all, filters({ prices: ['Paid'] }))).toEqual([cafe, mall]);
-  });
-
-  it('filters by a specific price level', () => {
-    expect(filterPlaces(all, filters({ prices: ['₹₹₹'] }))).toEqual([mall]);
-  });
-
-  it('filters by vibe', () => {
-    expect(filterPlaces(all, filters({ vibes: ['Date spot'] }))).toEqual([cafe]);
+  it('filters by a tag (OR within the group)', () => {
+    expect(filterPlaces(all, filters({ tags: ['sunrise'] }))).toEqual([beach]);
+    expect(filterPlaces(all, filters({ tags: ['gopuram', 'movies'] }))).toEqual([temple, mall]);
   });
 
   it('filters by best time', () => {
@@ -125,20 +114,11 @@ describe('filterPlaces', () => {
     expect(filterPlaces(all, filters({ areas: ['Mylapore'] }))).toEqual([temple]);
   });
 
-  it('filters by indoor/outdoor setting', () => {
-    expect(filterPlaces(all, filters({ settings: ['Outdoor'] }))).toEqual([beach, temple]);
-  });
-
   it('ANDs different filter groups together', () => {
-    expect(
-      filterPlaces(all, filters({ prices: ['Free'], settings: ['Outdoor'], bestTimes: ['Evening'] }))
-    ).toEqual([beach, temple]);
-    expect(
-      filterPlaces(
-        all,
-        filters({ prices: ['Free'], settings: ['Outdoor'], bestTimes: ['Night'] })
-      )
-    ).toEqual([beach]);
+    expect(filterPlaces(all, filters({ tags: ['sunrise'], bestTimes: ['Evening'] }))).toEqual([
+      beach,
+    ]);
+    expect(filterPlaces(all, filters({ tags: ['sunrise'], bestTimes: ['Morning'] }))).toEqual([]);
   });
 
   it('matches search against name, case-insensitively', () => {
@@ -151,7 +131,7 @@ describe('filterPlaces', () => {
   });
 
   it('combines search with other filters', () => {
-    expect(filterPlaces(all, filters({ search: 'beach', prices: ['Paid'] }))).toEqual([]);
+    expect(filterPlaces(all, filters({ search: 'beach', tags: ['movies'] }))).toEqual([]);
   });
 
   it('returns an empty array when nothing matches', () => {
@@ -167,8 +147,8 @@ describe('countPanelFilters', () => {
         filters({
           search: 'beach',
           categories: ['Cafés'],
-          prices: ['Free', 'Paid'],
-          vibes: ['Family'],
+          tags: ['rustic', 'luxury'],
+          bestTimes: ['Morning'],
           areas: ['Marina'],
         })
       )

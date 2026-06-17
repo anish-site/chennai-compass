@@ -134,7 +134,13 @@ export default function PlaceCard({ place, index, visited = false, onToggleVisit
 
       <div className="info-strip">
         <span className="fare">
-          Fare: <strong>{place.price}</strong>
+          {place.price ? (
+            <>
+              Fare: <strong>{place.price}</strong>
+            </>
+          ) : (
+            <span className="community-pin">📍 friend's pick</span>
+          )}
         </span>
         <span className="times" aria-label="Best time to visit">
           {place.bestTime.map((time) => {
