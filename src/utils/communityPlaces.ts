@@ -1,18 +1,25 @@
-import {
-  BEST_TIMES,
-  CATEGORIES,
-  SETTINGS,
-  VIBES,
-  type BestTime,
-  type Category,
-  type Place,
-  type Price,
-  type Setting,
-  type Vibe,
-} from '../data/places';
+import { BEST_TIMES, CATEGORIES, type BestTime, type Category, type Place } from '../data/places';
 import { SHEET_CSV_URL } from '../data/config';
 
-const PRICES: Price[] = ['Free', '₹', '₹₹', '₹₹₹'];
+const A = (w: string) => (/^[aeiou]/i.test(w) ? 'An' : 'A');
+
+const CATEGORY_NOUN: Record<Category, string> = {
+  'Cafés': 'café',
+  Beaches: 'beach',
+  Food: 'food spot',
+  Heritage: 'heritage spot',
+  Shopping: 'shopping spot',
+  Hangouts: 'hangout',
+  'Day Trips': 'day trip',
+};
+
+/** A small postcard line built from the tags, since the sheet has no description. */
+export function autoDescription(category: Category, area: string, tags: string[]): string {
+  const noun = CATEGORY_NOUN[category];
+  const adjectives = tags.slice(0, 2).join(', ').replace(/-/g, ' ');
+  const lead = adjectives ? `${A(adjectives)} ${adjectives} ${noun}` : `${A(noun)} ${noun}`;
+  return `${lead} in ${area}.`;
+}
 
 /** Minimal RFC-4180 CSV parser: quoted fields, escaped quotes, newlines in quotes. */
 export function parseCsv(text: string): string[][] {
@@ -95,9 +102,11 @@ function parseCoords(latCell: string, lngCell: string): Place['coords'] {
 }
 
 /**
- * Maps published-sheet rows (header + data) to Places. Only approved rows
- * with a valid name/area/description/category make it through; everything
- * else degrades to safe defaults rather than breaking the app.
+ * Maps published-sheet rows (header + data) to Places. The sheet is simple —
+ * Name, Area, Category, Best time, Tags (+ Approved, optional Lat/Long). Only
+ * approved rows with a valid name/area/category make it through; the
+ * description is written from the tags. Top picks are curator-only (set in
+ * places.ts), never from the sheet.
  */
 export function rowsToPlaces(rows: string[][]): Place[] {
   if (rows.length < 2) return [];
@@ -113,25 +122,20 @@ export function rowsToPlaces(rows: string[][]): Place[] {
     if (!isApproved(cell(row, 'approv'))) continue;
     const name = cell(row, 'name');
     const area = cell(row, 'area');
-    const description = cell(row, 'desc');
     const category = oneOf<Category>(CATEGORIES, cell(row, 'categ'));
-    if (!name || !area || !description || !category) continue;
+    if (!name || !area || !category) continue;
 
-    const vibes = manyOf<Vibe>(VIBES, cell(row, 'vibe'));
     const bestTime = manyOf<BestTime>(BEST_TIMES, cell(row, 'best'));
+    const tags = splitList(cell(row, 'tag'));
     places.push({
       id: `community-${slugify(name)}`,
       name,
       category,
       area,
-      description,
-      price: oneOf<Price>(PRICES, cell(row, 'price')) ?? '₹',
-      vibes: vibes.length > 0 ? vibes : ['Group hangout'],
+      description: autoDescription(category, area, tags),
       bestTime: bestTime.length > 0 ? bestTime : ['Evening'],
-      setting: oneOf<Setting>(SETTINGS, cell(row, 'setting')) ?? 'Outdoor',
-      tags: splitList(cell(row, 'tag')),
+      tags,
       community: true,
-      topPick: isApproved(cell(row, 'top')),
       coords: parseCoords(cell(row, 'lat'), cell(row, 'lon')),
     });
   }

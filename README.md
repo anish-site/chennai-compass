@@ -20,8 +20,9 @@ hangouts I'd actually take my friends to. Built for my college peers.
 - **Talk like a local** — a starter Tamil phrasebook (vanakkam, nandri, anna, evlo, eppo…) for
   newcomers, editable in `src/data/phrasebook.ts`.
 - **Top picks** — a gold-star toggle filters to your standout picks; combine it with a category
-  for "my top cafés". Set `topPick: true` in `src/data/places.ts` (or a "Top pick" column in the
-  sheet).
+  for "my top cafés". Set `topPick: true` in `src/data/places.ts` (curator-only).
+- **Category tags** — pick a category and the filter panel offers that category's tags
+  (Cafés → rustic, luxury, study-friendly…), defined in `CATEGORY_TAGS` in `src/data/places.ts`.
 - **Near me** — one tap sorts every card by straight-line distance from you (with "under 3/5/10
   km" filters). Pure Haversine math on bundled coordinates; no API, location never leaves the
   device.
@@ -31,8 +32,7 @@ hangouts I'd actually take my friends to. Built for my college peers.
 - The **☰ menu** has About, all the tips, a **city roads explainer**, the **Chennai Metro map**
   and the install-as-app option. Drop `maps/city-roads.jpg` / `maps/metro-map.jpg` into
   `public/` to show your own map images in those modals.
-- Use the **master filter**: search, category, free/paid & price level, vibe (date spot, group
-  hangout, solo/study, family), best time of day, area, and indoor/outdoor.
+- Use the **master filter**: search, category, category-specific tags, best time of day, and area.
 - The **About** button (top right) has a bit about me and about Chennai.
 - The **Install** button adds it to your phone's home screen as an app (PWA).
 
@@ -61,15 +61,16 @@ array and the app picks it up automatically — filters, areas and all:
 
 The whole pipeline is built — it activates the moment a sheet URL is configured:
 
-1. Create a **Google Form** with these questions: *Name, Area, Category (dropdown: Cafés,
-   Beaches, Food, Heritage, Shopping, Hangouts, Day Trips), Description, Price (dropdown: Free,
-   ₹, ₹₹, ₹₹₹), Vibes (checkboxes), Best time (checkboxes: Morning, Evening, Night), Setting
-   (dropdown: Indoor, Outdoor), Tags*.
+1. Create a **Google Form** with just four questions: *Place name* (short answer), *Area /
+   neighbourhood* (short answer), *Category* (dropdown: Cafés, Beaches, Food, Heritage,
+   Shopping, Hangouts, Day Trips), *Best time* (checkboxes: Morning, Evening, Night), and
+   *Tags* (checkboxes — use the per-category options from `CATEGORY_TAGS` in `places.ts`).
 2. In the form's Responses tab click **Link to Sheets**, then add an **Approved** checkbox
-   column in the sheet. Only rows you tick ever appear. Coordinates are **auto-geocoded via
-   OpenStreetMap on each deploy**, so approved places join "near me" sorting after the next
-   deploy-hook rebuild (until then they show without a distance). If a pin lands wrong, add
-   optional Latitude/Longitude columns to override it.
+   column in the sheet. Only rows you tick ever appear. The card's description is auto-written
+   from the tags; top picks stay curator-only (set in `places.ts`). Coordinates are
+   **auto-geocoded via OpenStreetMap on each deploy**, so approved places join "near me" sorting
+   after the next deploy-hook rebuild. If a pin lands wrong, add optional Latitude/Longitude
+   columns to override it.
 3. **File → Share → Publish to web → CSV**, copy the URL, and paste it into `SHEET_CSV_URL`
    in [`src/data/config.ts`](src/data/config.ts). Push once.
 

@@ -1,21 +1,9 @@
 import { useState } from 'react';
 import { LocateFixed, Search, SlidersHorizontal, Star, X } from 'lucide-react';
-import {
-  BEST_TIMES,
-  CATEGORIES,
-  SETTINGS,
-  VIBES,
-  type Category,
-} from '../data/places';
-import {
-  countPanelFilters,
-  EMPTY_FILTERS,
-  type Filters,
-  type PriceFilter,
-} from '../utils/filterPlaces';
+import { BEST_TIMES, CATEGORIES, CATEGORY_TAGS, type Category } from '../data/places';
+import { countPanelFilters, EMPTY_FILTERS, type Filters } from '../utils/filterPlaces';
 import type { GeoStatus } from '../hooks/useGeolocation';
 
-const PRICE_OPTIONS: PriceFilter[] = ['Free', 'Paid', '₹', '₹₹', '₹₹₹'];
 const DISTANCE_OPTIONS = [3, 5, 10];
 
 function toggle<T>(list: T[], value: T): T[] {
@@ -46,6 +34,7 @@ function nearMeLabel(nearMe: NearMe): string {
 export default function FilterBar({ filters, setFilters, areas, resultCount, nearMe }: Props) {
   const [panelOpen, setPanelOpen] = useState(false);
   const panelCount = countPanelFilters(filters);
+  const selectedCategory = filters.categories.length === 1 ? filters.categories[0] : null;
   const anyActive =
     panelCount > 0 ||
     filters.categories.length > 0 ||
@@ -134,7 +123,9 @@ export default function FilterBar({ filters, setFilters, areas, resultCount, nea
               setFilters((f) => ({
                 ...f,
                 // Single-select: pick this category only, or clear it back to All.
+                // Tags are category-specific, so reset them on a category change.
                 categories: f.categories[0] === cat ? [] : [cat],
+                tags: [],
               }))
             }
           >
@@ -164,20 +155,18 @@ export default function FilterBar({ filters, setFilters, areas, resultCount, nea
               </div>
             </div>
           )}
-          {chipRow('Price', PRICE_OPTIONS, filters.prices, (v) =>
-            setFilters((f) => ({ ...f, prices: toggle(f.prices, v) }))
-          )}
-          {chipRow('Vibe', VIBES, filters.vibes, (v) =>
-            setFilters((f) => ({ ...f, vibes: toggle(f.vibes, v) }))
+          {selectedCategory ? (
+            chipRow(`${selectedCategory} tags`, CATEGORY_TAGS[selectedCategory], filters.tags, (v) =>
+              setFilters((f) => ({ ...f, tags: toggle(f.tags, v) }))
+            )
+          ) : (
+            <p className="filter-hint">Pick a category above to filter by tags like rustic, luxury…</p>
           )}
           {chipRow('Best time', BEST_TIMES, filters.bestTimes, (v) =>
             setFilters((f) => ({ ...f, bestTimes: toggle(f.bestTimes, v) }))
           )}
           {chipRow('Area', areas, filters.areas, (v) =>
             setFilters((f) => ({ ...f, areas: toggle(f.areas, v) }))
-          )}
-          {chipRow('Setting', SETTINGS, filters.settings, (v) =>
-            setFilters((f) => ({ ...f, settings: toggle(f.settings, v) }))
           )}
         </div>
       )}

@@ -18,10 +18,10 @@ export interface Place {
   category: Category;
   area: string;
   description: string;
-  price: Price;
-  vibes: Vibe[];
+  price?: Price;
+  vibes?: Vibe[];
   bestTime: BestTime[];
-  setting: Setting;
+  setting?: Setting;
   tags: string[];
   /** Nearest public transport — any subset; shown on the postcard. */
   transit?: {
@@ -58,6 +58,22 @@ export const VIBES: Vibe[] = ['Date spot', 'Group hangout', 'Solo / study', 'Fam
 export const BEST_TIMES: BestTime[] = ['Morning', 'Evening', 'Night'];
 export const SETTINGS: Setting[] = ['Indoor', 'Outdoor'];
 
+/**
+ * The filterable tag vocabulary per category — these are the "pre-fixed tags"
+ * shown as filter chips when a category is selected, and the exact options to
+ * offer in the Google Form's Tags question. A place is filterable by a tag if
+ * it carries that tag in `tags`. Edit freely.
+ */
+export const CATEGORY_TAGS: Record<Category, string[]> = {
+  'Cafés': ['rustic', 'luxury', 'study-friendly', 'instagrammable', 'outdoor-seating', 'budget', 'desserts'],
+  Beaches: ['sunrise', 'sunset', 'swimming', 'quiet', 'food-stalls', 'walks'],
+  Food: ['street-food', 'fine-dining', 'vegetarian', 'non-veg', 'budget', 'late-night', 'breakfast', 'biryani'],
+  Heritage: ['architecture', 'history', 'temple', 'museum', 'free-entry', 'photography'],
+  Shopping: ['bargains', 'mall', 'boutique', 'street-shopping', 'ac'],
+  Hangouts: ['scenic', 'quiet', 'group', 'date-spot', 'offbeat', 'nature'],
+  'Day Trips': ['road-trip', 'beach', 'nature', 'historical', 'family'],
+};
+
 /** Stamp emoji + accent colour for each category — drives the postcard look. */
 export const CATEGORY_META: Record<Category, { emoji: string; accent: string }> = {
   'Cafés': { emoji: '☕', accent: '#8c5a3c' },
@@ -84,7 +100,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Family'],
     bestTime: ['Morning', 'Evening', 'Night'],
     setting: 'Outdoor',
-    tags: ['sunrise', 'sundal', 'walks'],
+    tags: ['sunrise', 'sundal', 'walks', 'food-stalls'],
     transit: { rail: 'Light House MRTS', bus: 'Kannagi Statue / Marina' },
     coords: { lat: 13.05, lng: 80.2824 },
   },
@@ -99,7 +115,7 @@ export const places: Place[] = [
     vibes: ['Date spot', 'Group hangout'],
     bestTime: ['Evening', 'Night'],
     setting: 'Outdoor',
-    tags: ['sunset', 'street food', 'chill'],
+    tags: ['sunset', 'street food', 'chill', 'food-stalls', 'walks'],
     googleQuery: 'Elliots Beach Besant Nagar Chennai',
     transit: { rail: 'Thiruvanmiyur MRTS', bus: 'Besant Nagar Terminus' },
     coords: { lat: 13.0003, lng: 80.2718 },
@@ -115,7 +131,7 @@ export const places: Place[] = [
     vibes: ['Solo / study', 'Group hangout'],
     bestTime: ['Morning'],
     setting: 'Outdoor',
-    tags: ['sunrise', 'boats', 'photography'],
+    tags: ['sunrise', 'boats', 'photography', 'scenic', 'offbeat', 'group'],
     transit: { metro: 'Sir Theagaraya College', rail: 'Royapuram', bus: 'Kasimedu' },
     coords: { lat: 13.1262, lng: 80.2931 },
   },
@@ -131,7 +147,7 @@ export const places: Place[] = [
     vibes: ['Date spot', 'Solo / study'],
     bestTime: ['Evening'],
     setting: 'Outdoor',
-    tags: ['golden hour', 'photography', 'offbeat'],
+    tags: ['golden hour', 'photography', 'offbeat', 'scenic', 'date-spot'],
     transit: { rail: 'Indira Nagar MRTS', bus: 'Urur Kuppam' },
     coords: { lat: 13.0095, lng: 80.2745 },
   },
@@ -147,7 +163,7 @@ export const places: Place[] = [
     vibes: ['Family', 'Solo / study'],
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
-    tags: ['gopuram', 'architecture', 'mylapore'],
+    tags: ['gopuram', 'architecture', 'mylapore', 'temple', 'free-entry'],
     transit: { rail: 'Thirumayilai MRTS', bus: 'Mylapore Tank' },
     coords: { lat: 13.0337, lng: 80.2698 },
   },
@@ -162,7 +178,7 @@ export const places: Place[] = [
     vibes: ['Family', 'Solo / study'],
     bestTime: ['Morning'],
     setting: 'Indoor',
-    tags: ['gothic', 'history', 'architecture'],
+    tags: ['gothic', 'history', 'architecture', 'free-entry'],
     transit: { rail: 'Thirumayilai MRTS', bus: 'Santhome Church' },
     coords: { lat: 13.0336, lng: 80.2787 },
   },
@@ -192,7 +208,7 @@ export const places: Place[] = [
     vibes: ['Solo / study', 'Family'],
     bestTime: ['Morning'],
     setting: 'Indoor',
-    tags: ['bronzes', 'museum', 'architecture'],
+    tags: ['bronzes', 'museum', 'architecture', 'history'],
     transit: { metro: 'Egmore', rail: 'Chennai Egmore', bus: 'Egmore Museum' },
     coords: { lat: 13.071, lng: 80.2572 },
   },
@@ -207,7 +223,7 @@ export const places: Place[] = [
     vibes: ['Family', 'Date spot'],
     bestTime: ['Morning'],
     setting: 'Outdoor',
-    tags: ['culture', 'crafts', 'ecr'],
+    tags: ['culture', 'crafts', 'ecr', 'museum', 'photography'],
     transit: { bus: 'DakshinaChitra (ECR buses)' },
     coords: { lat: 12.8704, lng: 80.2421 },
   },
@@ -222,7 +238,7 @@ export const places: Place[] = [
     vibes: ['Solo / study', 'Date spot'],
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
-    tags: ['art', 'quiet', 'galleries'],
+    tags: ['art', 'quiet', 'galleries', 'photography'],
     transit: { bus: 'Injambakkam (ECR buses)' },
     coords: { lat: 12.9446, lng: 80.2563 },
   },
@@ -238,7 +254,7 @@ export const places: Place[] = [
     vibes: ['Date spot', 'Family'],
     bestTime: ['Evening'],
     setting: 'Outdoor',
-    tags: ['garden', 'aesthetic', 'iced tea'],
+    tags: ['garden', 'aesthetic', 'iced tea', 'luxury', 'outdoor-seating', 'instagrammable'],
     transit: { metro: 'Thousand Lights', bus: 'Royapettah Hospital' },
     coords: { lat: 13.056, lng: 80.265 },
   },
@@ -253,7 +269,7 @@ export const places: Place[] = [
     vibes: ['Solo / study', 'Date spot'],
     bestTime: ['Evening'],
     setting: 'Indoor',
-    tags: ['books', 'study spot', 'wifi'],
+    tags: ['books', 'study spot', 'wifi', 'study-friendly', 'budget', 'desserts'],
     transit: { metro: 'Thousand Lights', bus: 'Royapettah' },
     coords: { lat: 13.0525, lng: 80.259 },
   },
@@ -268,7 +284,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Solo / study'],
     bestTime: ['Evening'],
     setting: 'Indoor',
-    tags: ['waffles', 'group tables', 'quirky'],
+    tags: ['waffles', 'group tables', 'quirky', 'rustic', 'study-friendly', 'desserts'],
     transit: { rail: 'Kotturpuram MRTS', bus: 'Kotturpuram' },
     coords: { lat: 13.0163, lng: 80.2425 },
   },
@@ -283,7 +299,7 @@ export const places: Place[] = [
     vibes: ['Date spot', 'Family'],
     bestTime: ['Morning'],
     setting: 'Indoor',
-    tags: ['breakfast', 'cheesecake', 'classic'],
+    tags: ['breakfast', 'cheesecake', 'classic', 'luxury', 'outdoor-seating'],
     transit: { rail: 'Greenways Road MRTS', bus: 'Chamiers Road' },
     coords: { lat: 13.0277, lng: 80.2546 },
   },
@@ -299,7 +315,7 @@ export const places: Place[] = [
     vibes: ['Family', 'Group hangout'],
     bestTime: ['Morning', 'Night'],
     setting: 'Indoor',
-    tags: ['idli', 'jigarthanda', 'budget'],
+    tags: ['idli', 'jigarthanda', 'budget', 'vegetarian', 'breakfast'],
     transit: { rail: 'Mambalam', bus: 'Panagal Park' },
     coords: { lat: 13.0424, lng: 80.2336 },
   },
@@ -314,7 +330,7 @@ export const places: Place[] = [
     vibes: ['Solo / study', 'Family'],
     bestTime: ['Morning'],
     setting: 'Indoor',
-    tags: ['sambar idli', 'legacy', 'budget'],
+    tags: ['sambar idli', 'legacy', 'budget', 'vegetarian', 'breakfast'],
     transit: { rail: 'Chepauk MRTS', bus: 'Ice House' },
     coords: { lat: 13.0565, lng: 80.2762 },
   },
@@ -329,7 +345,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Family'],
     bestTime: ['Night'],
     setting: 'Indoor',
-    tags: ['chicken 65', 'biryani', 'late night'],
+    tags: ['chicken 65', 'biryani', 'late night', 'non-veg', 'late-night'],
     transit: { metro: 'LIC', bus: 'Anna Salai (LIC)' },
     coords: { lat: 13.0608, lng: 80.2647 },
   },
@@ -344,7 +360,7 @@ export const places: Place[] = [
     vibes: ['Group hangout'],
     bestTime: ['Evening', 'Night'],
     setting: 'Outdoor',
-    tags: ['chaat', 'kulfi', 'street food'],
+    tags: ['chaat', 'kulfi', 'street food', 'street-food', 'vegetarian', 'budget'],
     googleQuery: 'Sowcarpet street food Chennai',
     transit: { metro: 'High Court', rail: 'Chennai Park', bus: 'Mint' },
     coords: { lat: 13.09, lng: 80.278 },
@@ -360,7 +376,7 @@ export const places: Place[] = [
     vibes: ['Solo / study', 'Group hangout'],
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
-    tags: ['bajji', 'hidden gem', 'mylapore'],
+    tags: ['bajji', 'hidden gem', 'mylapore', 'street-food', 'vegetarian', 'budget'],
     googleQuery: 'Jannal Kadai Mylapore Chennai',
     transit: { rail: 'Thirumayilai MRTS', bus: 'Mylapore Tank' },
     coords: { lat: 13.034, lng: 80.269 },
@@ -377,7 +393,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Family'],
     bestTime: ['Evening'],
     setting: 'Outdoor',
-    tags: ['bargains', 'street shopping', 'snacks'],
+    tags: ['bargains', 'street shopping', 'snacks', 'street-shopping'],
     transit: { rail: 'Mambalam', bus: 'Panagal Park' },
     coords: { lat: 13.0399, lng: 80.2349 },
   },
@@ -392,7 +408,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Date spot'],
     bestTime: ['Evening', 'Night'],
     setting: 'Indoor',
-    tags: ['mall', 'movies', 'arcade'],
+    tags: ['mall', 'movies', 'arcade', 'ac', 'boutique'],
     transit: { rail: 'Velachery MRTS', bus: 'Phoenix Mall' },
     coords: { lat: 12.9941, lng: 80.2181 },
   },
@@ -407,7 +423,7 @@ export const places: Place[] = [
     vibes: ['Date spot', 'Family'],
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
-    tags: ['garden', 'walks', 'budget'],
+    tags: ['garden', 'walks', 'budget', 'nature', 'quiet', 'date-spot'],
     transit: { metro: 'Teynampet', bus: 'Semmozhi Poonga' },
     coords: { lat: 13.0531, lng: 80.2503 },
   },
@@ -438,7 +454,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Date spot', 'Family'],
     bestTime: ['Morning'],
     setting: 'Outdoor',
-    tags: ['unesco', 'shore temple', 'road trip'],
+    tags: ['unesco', 'shore temple', 'road trip', 'historical', 'road-trip', 'family'],
     transit: { bus: 'Mamallapuram Bus Stand (588)' },
     coords: { lat: 12.6208, lng: 80.1945 },
   },
@@ -453,7 +469,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Date spot'],
     bestTime: ['Morning', 'Evening'],
     setting: 'Outdoor',
-    tags: ['boating', 'backwaters', 'ecr'],
+    tags: ['boating', 'backwaters', 'ecr', 'road-trip', 'family', 'nature'],
     transit: { bus: 'Muttukadu Boat House (ECR buses)' },
     coords: { lat: 12.8124, lng: 80.2418 },
   },
@@ -468,7 +484,7 @@ export const places: Place[] = [
     vibes: ['Group hangout', 'Solo / study'],
     bestTime: ['Morning'],
     setting: 'Outdoor',
-    tags: ['flamingos', 'birding', 'road trip'],
+    tags: ['flamingos', 'birding', 'road trip', 'nature', 'road-trip', 'scenic'],
     transit: { rail: 'Ponneri (then share-auto)', bus: 'Pulicat (from Ponneri)' },
     coords: { lat: 13.416, lng: 80.316 },
   },
